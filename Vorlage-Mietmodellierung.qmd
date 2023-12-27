@@ -1,0 +1,105 @@
+---
+title: "Modellierung der Kaltmiete"
+subtitle: "Vergleich xxx und yyy"
+lang: de
+author: "Gabi Musterstudentin, Horst Vozeigestudent"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    html-math-method: katex
+  pdf:
+    toc: true
+    number-sections: false
+    colorlinks: true 
+    papersize: a4
+---
+
+```{r setup}
+#| include: false
+library(mosaic)
+library(here)
+library(readxl)
+```
+
+
+<!-- Sollten Umlaute falsch angezeigt werden: "File -> Reopen with Encoding -> UTF8" -->
+
+# Einleitung
+
+Gehen Sie hier auf die inhaltliche Aufgabenstellung ein. 
+
+Ungefährer Umfang Text: 0,5--1 Seite. 
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+# Datenerhebung
+
+Gehen Sie hier kurz darauf ein wie Sie die Daten erhoben haben (Suchfilter, Sortierung).
+
+Ungefährer Umfang Text: 1--3 Sätze.
+
+Daten einlesen:
+
+```{r}
+# Datei (inkl. Pfad)
+pfad_mieten <- here("data", "Mieten.xlsx")
+#### DUMMY für Repo Vorhersagewettbewerb. LÖSCHEN!!
+pfad_mieten <- "Mieten.xlsx"
+# Daten einlesen
+mieten <- read_excel(pfad_mieten)
+```
+
+Kontrolle:
+
+```{r}
+# Datenstruktur
+str(mieten)
+# Obere 6 Beobachtungen
+head(mieten)
+```
+
+
+# Explorative Datenanalyse
+
+Führen Sie hier eine Explorative Datenanalyse durch. Auch eine evtl. Datenvorverarbeitung erfolgt in diesem Abschnitt.
+
+Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umfang von ca. 0,5--1 Seiten haben, bei Gruppenarbeiten einen von ca. 1--2 Seiten.
+
+```{r}
+gf_boxplot(Kaltmiete ~ Ort, data = mieten)
+```
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+# Modellierung
+
+Modellieren Sie in diesem Abschnitt die Miete und interpretieren Sie Ihr Ergebnis. 
+
+Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umfang von ca. 0,5--1 Seiten haben, bei Gruppenarbeiten einen von ca. 1--2 Seiten.
+
+Modell schätzen:
+
+```{r}
+Modell_Mieten <- lm(Kaltmiete ~ 1, data = mieten)
+summary(Modell_Mieten)
+```
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+# Zusammenfassung
+
+Fassen Sie gemeinsam kurz die zentralen Ergebnisse zusammen (0,5--1 Seite). Gehen Sie auch auf die Grenzen Ihrer Analyse ein.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+
+
+
+
+***
+
+# Quellen und Hilfsmittel
+
+Führen Sie hier die verwendeten Hilfsmittel sowie die verwendete Literatur auf.
+
