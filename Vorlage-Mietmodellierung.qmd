@@ -2,7 +2,7 @@
 title: "Modellierung der Kaltmiete"
 subtitle: "Vergleich xxx und yyy"
 lang: de
-author: "Gabi Musterstudentin, Horst Vozeigestudent"
+author: "Henrik Popp, Kai Herbst, Manuel Zeh"
 date: "`r Sys.Date()`"
 format: 
   html:
