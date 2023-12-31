@@ -1,6 +1,6 @@
 ---
 title: "Modellierung der Kaltmiete"
-subtitle: "Vergleich xxx und yyy"
+subtitle: "Vergleich Frankfurt am Main und Leipzig"
 lang: de
 author: "Henrik Popp, Kai Herbst, Manuel Zeh"
 date: "`r Sys.Date()`"
@@ -35,7 +35,7 @@ Gehen Sie hier auf die inhaltliche Aufgabenstellung ein.
 
 Ungefährer Umfang Text: 0,5--1 Seite. 
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+In dieser Modellierung sollen die Kaltmieten zweier deutschen Städte verglichen werden. 
 
 # Datenerhebung
 
