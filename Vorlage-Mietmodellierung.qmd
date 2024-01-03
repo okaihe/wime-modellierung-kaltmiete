@@ -25,17 +25,17 @@ library(readxl)
 
 <!-- Sollten Umlaute falsch angezeigt werden: "File -> Reopen with Encoding -> UTF8" -->
 
-#Test Git Hub
-
-TEST 2
-
 # Einleitung
 
 Gehen Sie hier auf die inhaltliche Aufgabenstellung ein. 
 
-Ungefährer Umfang Text: 0,5--1 Seite. 
+Ungefährer Umfang Text: 0,5--1 Seite.
 
-In dieser Modellierung sollen die Kaltmieten zweier deutschen Städte verglichen werden. 
+In dieser sonstigen Beteiligung sollen die Kaltmieten der beiden Städte Frankfurt am Main und Leipzig miteinander verglichen und modelliert werden. Ziel ist es, die verschiedenen möglichen Einflussfaktoren auf die Kaltmiete in den jeweiligen Städte zu bestimmen und eine Modellierung der Kaltmiete zu erstellen.
+
+Mit der explorativen Datenanalyse sollen zunächst die erhobenen Daten beschrieben und veranschaulicht werden. Hierbei wird zunächst die Vorverarbeitung der Daten beschrieben, im Anschluss wird mithilfe von Grafiken und dazugehörigen Interpretationen eine Datenanalyse erstellt. Dabei soll unter anderem herausgefunden werden, welche erhobenen Variablen den größten Einfluss auf die Kaltmiete einer Stadt haben oder wie hoch die eventuellen Unterschiede der Mieten in den beiden Städten sind.
+Den zentralen Teil des Dokuments stellt die Modellierung dar. Hier soll die Kaltmiete modelliert, also durch ein selbsterstelltes statistisches Modell dargestellt werden. Neben der Modellierung folgt hier auch eine Interpretation ebendieser.
+Zum Abschluss werden die Ergebnisse in der Zusammenfassung aufgearbeitet und präsentiert.
 
 # Datenerhebung
 
@@ -47,9 +47,9 @@ Daten einlesen:
 
 ```{r}
 # Datei (inkl. Pfad)
-pfad_mieten <- here("data", "Mieten.xlsx")
+pfad_mieten <- here("data", "Mieten_Final.xlsx")
 #### DUMMY für Repo Vorhersagewettbewerb. LÖSCHEN!!
-pfad_mieten <- "Mieten.xlsx"
+pfad_mieten <- "Mieten_FInal.xlsx"
 # Daten einlesen
 mieten <- read_excel(pfad_mieten)
 ```
