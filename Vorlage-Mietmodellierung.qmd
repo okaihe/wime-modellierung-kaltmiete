@@ -13,6 +13,8 @@ format:
     number-sections: false
     colorlinks: true 
     papersize: a4
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup}
@@ -31,7 +33,18 @@ Gehen Sie hier auf die inhaltliche Aufgabenstellung ein.
 
 Ungefährer Umfang Text: 0,5--1 Seite.
 
-In dieser sonstigen Beteiligung sollen die Kaltmieten der beiden Städte Frankfurt am Main und Leipzig miteinander verglichen und modelliert werden. Ziel ist es, die verschiedenen möglichen Einflussfaktoren auf die Kaltmiete in den jeweiligen Städte zu bestimmen und eine Modellierung der Kaltmiete zu erstellen.
+In dieser Fallstudie sollen die Kaltmieten der beiden Städte Frankfurt am Main und Leipzig miteinander verglichen und modelliert werden. Ziel ist es, die verschiedenen möglichen Einflussfaktoren auf die Kaltmiete in den jeweiligen Städte zu bestimmen und eine Modellierung der Kaltmiete zu erstellen.
+- Hier auch noch Literatur recherchieren:
+  - https://de.statista.com/statistik/daten/studie/258635/umfrage/bruttokaltmiete-bewohnter-wohnungen-in-deutschland-nach-bundeslaendern/
+  - https://www.deutschlandatlas.bund.de/DE/Karten/Wie-wir-wohnen/040-Mieten.html#_6a54aw429
+  - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8053893/
+  - https://de.statista.com/statistik/daten/studie/262508/umfrage/mietpreise-in-frankfurt-am-main/
+  - https://de.statista.com/statistik/daten/studie/1312743/umfrage/mieten-in-leipzig-nach-dem-baualter-der-wohnung/
+  - https://de.statista.com/statistik/daten/studie/535299/umfrage/mietpreise-auf-dem-wohnungsmarkt-in-leipzig/
+  - https://de.statista.com/statistik/daten/studie/1312730/umfrage/entwicklung-der-angebotsmieten-in-leipzig/
+  - https://link.springer.com/chapter/10.1007/978-3-658-11757-3_4
+  - https://www.ifo.de/DocDL/ifoDD_14-06_03-10.pdf
+  
 
 Mit der explorativen Datenanalyse sollen zunächst die erhobenen Daten beschrieben und veranschaulicht werden. Hierbei wird zunächst die Vorverarbeitung der Daten beschrieben, im Anschluss wird mithilfe von Grafiken und dazugehörigen Interpretationen eine Datenanalyse erstellt. Dabei soll unter anderem herausgefunden werden, welche erhobenen Variablen den größten Einfluss auf die Kaltmiete einer Stadt haben oder wie hoch die eventuellen Unterschiede der Mieten in den beiden Städten sind.
 Den zentralen Teil des Dokuments stellt die Modellierung dar. Hier soll die Kaltmiete modelliert, also durch ein selbsterstelltes statistisches Modell dargestellt werden. Neben der Modellierung folgt hier auch eine Interpretation ebendieser.
@@ -49,7 +62,7 @@ Daten einlesen:
 # Datei (inkl. Pfad)
 pfad_mieten <- here("data", "Mieten_Final.xlsx")
 #### DUMMY für Repo Vorhersagewettbewerb. LÖSCHEN!!
-pfad_mieten <- "Mieten_FInal.xlsx"
+pfad_mieten <- "/Users/manuel/Desktop/Schreibtisch – MacBook Pro von Manuel/Master/Semester 1/Wissenschaftliche_Methodik/WM_WiSe23/Modellierung_Kaltmiete/wime-modellierung-kaltmiete/Mieten_Final.xlsx"
 # Daten einlesen
 mieten <- read_excel(pfad_mieten)
 ```
@@ -71,7 +84,11 @@ Führen Sie hier eine Explorative Datenanalyse durch. Auch eine evtl. Datenvorve
 Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umfang von ca. 0,5--1 Seiten haben, bei Gruppenarbeiten einen von ca. 1--2 Seiten.
 
 ```{r}
-gf_boxplot(Kaltmiete ~ Ort, data = mieten)
+gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten)
+gf_boxplot(Kaltmiete ~ Balkon, data = mieten)
+gf_point(Kaltmiete ~ Zimmer, data = mieten)
+mosaicplot(Balkon ~ Parkplatz, data = mieten)
+gf_point(Kaltmiete ~ Zimmer, data = mieten)
 ```
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
