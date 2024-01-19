@@ -63,8 +63,8 @@ library(readxl)
 
 In dieser Fallstudie sollen die Kaltmieten der beiden Städte Frankfurt am Main und Leipzig miteinander verglichen und modelliert werden. Ziel ist es, die verschiedenen möglichen Einflussfaktoren auf die Kaltmiete in den jeweiligen Städte zu bestimmen und eine Modellierung der Kaltmiete zu erstellen.
 
-Mit der explorativen Datenanalyse sollen zunächst die erhobenen Daten beschrieben und veranschaulicht werden. Hierbei wird die Vorverarbeitung der Daten beschrieben, im Anschluss wird mithilfe von Grafiken und dazugehörigen Interpretationen eine Datenanalyse erstellt. Dabei soll unter anderem herausgefunden werden, welche erhobenen Variablen den größten Einfluss auf die Kaltmiete einer Stadt haben oder wie hoch die eventuellen Unterschiede der Mieten in den beiden Städten sind.
-Den zentralen Teil des Dokuments stellt die Modellierung dar. Hier soll die Kaltmiete modelliert, also durch ein selbsterstelltes statistisches Modell dargestellt werden. Neben der Modellierung folgt hier auch eine Interpretation ebendieser.
+Zu Beginn wird auf die Datenerhebung eingegangen. Hier soll erklärt werden, woher die verarbeiteten Daten stammen und unter welchen Bedingungen die Daten erhoben wurden. Mit der explorativen Datenanalyse sollen dann die erhobenen Daten beschrieben und veranschaulicht werden. Hierbei wird die Vorverarbeitung der Daten beschrieben, im Anschluss wird mithilfe von Grafiken und dazugehörigen Interpretationen eine Datenanalyse erstellt. Dabei soll unter anderem herausgefunden werden, welche erhobenen Variablen den größten Einfluss auf die Kaltmiete einer Stadt haben oder wie hoch die eventuellen Unterschiede der Mieten in den beiden Städten sind.
+Den zentralen Teil des Dokuments stellt die Modellierung dar. Hier soll die Kaltmiete modelliert, also durch ein selbsterstelltes statistisches Modell dargestellt werden. Zudem wird das Modell interpretiert.
 Zum Abschluss werden die Ergebnisse in der Zusammenfassung aufgearbeitet und präsentiert.
 
 :::
@@ -103,13 +103,31 @@ head(mieten)
 :::
 
 # Explorative Datenanalyse
+Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit `str(mieten)` die Struktur des Datensatzes angezeigt werden.
+```{r}
+str(mieten)
+```
+
+Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie `Heizung` oder `Zimmer`, als auch metrische verhältnisskalierte Variablen wie `Kaltmiete` oder `Wohnflaeche` auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können.
+
+Zuerst soll auf den Zusammenhang von `Kaltmiete` und `Wohnflaeche` geschaut werden, bei zwei metrisch verhältnisskalierten Variablen bietet sich dafür ein Scatterplot an.
+
+```{r}
+gf_point(Kaltmiete ~ Wohnflaeche, data = mieten)
+```
+
+Grundsätzlich lässt sich ein positiver Zusammenhang zwischen `Kaltmiete` und `Wohnflaeche` erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt. Möchte man die Kaltmiete unter Betrachtung der Anzahl an Zimmern darstellen, bietet sich ein Streudiagramm an, da man eine stetige Variable (`Kaltmiete`) und eine diskrete Variable (`Zimmer`) hat.
+
+```{r}
+gf_point(Kaltmiete ~ Zimmer, data = mieten)
+```
+
 
 ```{r}
 gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten)
 gf_boxplot(Kaltmiete ~ Balkon, data = mieten)
 gf_point(Kaltmiete ~ Zimmer, data = mieten)
 mosaicplot(Balkon ~ Parkplatz, data = mieten)
-gf_point(Kaltmiete ~ Zimmer, data = mieten)
 ```
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
