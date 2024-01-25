@@ -116,9 +116,10 @@ Zuerst soll auf den Zusammenhang von `Kaltmiete` und `Wohnflaeche` geschaut werd
 gf_point(Kaltmiete ~ Wohnflaeche, data = mieten)
 ```
 
-Grundsätzlich lässt sich ein positiver Zusammenhang zwischen `Kaltmiete` und `Wohnflaeche` erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt. Möchte man die Kaltmiete unter Betrachtung der Anzahl an Zimmern darstellen, bietet sich ein Streudiagramm an, da man eine stetige Variable (`Kaltmiete`) und eine diskrete Variable (`Zimmer`) hat.
+Grundsätzlich lässt sich ein positiver Zusammenhang zwischen `Kaltmiete` und `Wohnflaeche` erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt. Als nächstes soll das Scatterplot um die Anzahl an Zimmer erweitert werden, hierfür wird das obige Diagramm eingefärbt. Möchte man die Kaltmiete unter Betrachtung der Anzahl an Zimmern darstellen, bietet sich ein Streudiagramm an, da man eine stetige Variable (`Kaltmiete`) und eine diskrete Variable (`Zimmer`) hat.
 
 ```{r}
+# gf_point(Kaltmiete ~ Wohnflaeche, color = ~ Zimmer, data = mieten)
 gf_point(Kaltmiete ~ Zimmer, data = mieten)
 ```
 
