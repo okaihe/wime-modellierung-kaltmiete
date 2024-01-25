@@ -123,6 +123,18 @@ Grundsätzlich lässt sich ein positiver Zusammenhang zwischen `Kaltmiete` und `
 gf_point(Kaltmiete ~ Zimmer, data = mieten)
 ```
 
+Weitere Ideen zur Analyse:
+- Kaltmiete pro Quadratmeter nach Stadt berechnen und als eigene Spalte pro Beobachtung hinzufügen + Stichpunkte zur Erklärung (Henrik)
+- Manuel: Kaltmiete zu Wohnfläche nach Stadt, von Henrik berechnet / Einbauküche / Heizung / Baujahr --> Einfluss auf Kaltmiete bzw. grafisch darstellen und analysieren --> Nach Stadt unterscheiden
+- Henrik: Kaltmiete bzw. Quadratmeterpreis nach Parkplatz / Etage / Zimmer / Balkon unterscheiden und analysieren
+
+- Wie unterscheiden sich die Städte, und wie verhält sich der Durchschnittspreis?
+  - Boxplot mit Kaltmiete ~ Stadt
+  - Boxplot mit Kaltmiete ~ Balkon oder Parkplatz mit Unterscheidung nach Städten --> Ggf. Grafik wieder rausnehmen wenn es keinen großen Unterschied gibt.
+- Etage analysieren --> Einfluss auf Miete
+- Wohnflaeche analysieren
+- Baujahr mit Histogramm darstellen --> Farbliche Unterteilung nach Städten
+
 
 ```{r}
 gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten)
