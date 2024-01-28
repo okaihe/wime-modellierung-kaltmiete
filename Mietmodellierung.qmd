@@ -28,6 +28,7 @@ editor_options:
 library(mosaic)
 library(here)
 library(readxl)
+library(dplyr)
 ```
 
 
@@ -106,6 +107,8 @@ head(mieten)
 Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit `str(mieten)` die Struktur des Datensatzes angezeigt werden.
 ```{r}
 str(mieten)
+miete_ffm <- subset(mieten, Ort == "Frankfurt")
+miete_lpz <- subset(mieten, Ort == "Leipzig")
 ```
 
 Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie `Heizung` oder `Zimmer`, als auch metrische verhältnisskalierte Variablen wie `Kaltmiete` oder `Wohnflaeche` auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können.
@@ -116,17 +119,63 @@ Zuerst soll auf den Zusammenhang von `Kaltmiete` und `Wohnflaeche` geschaut werd
 gf_point(Kaltmiete ~ Wohnflaeche, data = mieten)
 ```
 
-Grundsätzlich lässt sich ein positiver Zusammenhang zwischen `Kaltmiete` und `Wohnflaeche` erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt. Als nächstes soll das Scatterplot um die Anzahl an Zimmer erweitert werden, hierfür wird das obige Diagramm eingefärbt. Möchte man die Kaltmiete unter Betrachtung der Anzahl an Zimmern darstellen, bietet sich ein Streudiagramm an, da man eine stetige Variable (`Kaltmiete`) und eine diskrete Variable (`Zimmer`) hat.
+Grundsätzlich lässt sich ein positiver Zusammenhang zwischen `Kaltmiete` und `Wohnflaeche` erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt. Nun muss dieses Diagramm jedoch um die Information des Ortes erweitert werden, um eine genauere Aussage treffen zu können. Dafür wird der Code um den Zusatz `color = ~ Ort` erweitert:
 
 ```{r}
-# gf_point(Kaltmiete ~ Wohnflaeche, color = ~ Zimmer, data = mieten)
-gf_point(Kaltmiete ~ Zimmer, data = mieten)
+gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Ort)
+```
+
+Hier lässt sich nun erkennen, dass die erfassten Mieten im Datensatz in Frankfurt tendenziell höher sind, als in Leipzig. Bei vergleichbarer Wohnfläche liegen die gefärbten Punkte für Frankfurt stets über den Punkten von Leipzig. Um den Eindruck der Mietunterschiede zu festigen, kann ein Boxplot verwendet werden.
+
+```{r}
+gf_boxplot(Kaltmiete ~ Ort, data = mieten)
+```
+
+Das Boxplot zeigt, dass der Median für die Kaltmiete in Frankfurt deutlich über dem Median von Leipzig liegt. Zudem ist der 1,5-fache Interquartilsabstand bei Frankfurt größer als bei Leipzig, und die Whisker sind bei Frankfurt ebenfalls länger. Für Leipzig gibt es jedoch mehr Ausreißer, nämlich 4, verglichen mit den 2 Ausreißern von Frankfurt.
+
+Es sollen nun auch die weiteren Variablen untersucht werden, angefangen mit der Variablen `Heizung`. Um die verschiedenen Ausprägungen zu vergleichen und ihre absolute Häufigkeit darzustellen, eignet sich ein Säulendiagramm:
+```{r}
+# gf_boxplot(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
+# gf_point(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
+gf_bar( ~ Heizung, data = mieten, fill = ~ Ort, position = position_dodge()) + theme(axis.text.x = element_text(angle = 90))
+```
+
+Das Säulendiagramm zeigt, dass die Fußbodenheizung in Frankfurt am weitesten verbreitet ist, gefolgt von der Zentralheizung und der Fernwärme. In Leipzig sind Gas-Heizung und Zentralheizung gleich häufig vertreten, gefolgt von der Fernwärme. In einigen Beobachtungen und häufiger in Leipzig als in Frankfurt, wurde der Heizungstyp nicht angegeben.
+
+Bei der Variablen `Baujahr` handelt es sich hier um eine diskrete Variable. Aufgrund der Vielzahl an Jahren im Datensatz eignet sich jedoch die Verwendung des tatsächlichen Baujahres nicht, da die Darstellungen sonst sehr unübersichtlich werden. Stattdessen soll eine Klassifizierung in "alt - mittel - neu" vorgenommen werden, um die Baujahre zusammenzufassen.
+
+```{r}
+mieten <- mieten %>%
+  mutate(Baujahrgruppe = case_when(
+    is.na(Baujahr) ~ "NA",
+    as.integer(Baujahr) < 1970 ~ "alt",
+    between(as.integer(Baujahr), 1970, 2000) ~ "mittel",
+    TRUE ~ "neu"
+  ))
+
+gf_bar( ~ Baujahrgruppe, data = mieten, fill = ~ Ort, position = position_dodge())
+```
+
+Im Säulendiagramm ist erkennbar, dass die meisten Beobachtungen in Frankfurt in die Kategorie "neu" (Baujahr > 2000) fallen, gefolgt von "alt" (Baujahr < 1970) und "mittel". In Leipzig dominieren die Beobachtungen mit "alt", dann kommen "neue" Baujahre. Es treten in beiden Städten nur wenige Beobachtungen mit Baujahren zwischen 1970 und 2000 auf, in Leipzig wurde das Baujahr häufiger nicht angegeben.
+
+```{r}
+gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Heizung)
+gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Baujahrgruppe)
+gf_boxplot(Kaltmiete ~ Balkon, data = mieten, color = ~ Ort)
+gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten, color = ~ Ort)
+# gf_boxplot(Kaltmiete ~ Einbaukueche, data = mieten, color = ~ Ort)
+gf_boxplot(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
+gf_histogram(~ Kaltmiete, data = mieten, col = ~ Ort, fill = ~ Ort)
+
+mean(~ Kaltmiete, data = miete_ffm)
+mean(~ Kaltmiete, data = miete_lpz)
 ```
 
 Weitere Ideen zur Analyse:
 - Kaltmiete pro Quadratmeter nach Stadt berechnen und als eigene Spalte pro Beobachtung hinzufügen + Stichpunkte zur Erklärung (Henrik)
 - Manuel: Kaltmiete zu Wohnfläche nach Stadt, von Henrik berechnet / Einbauküche / Heizung / Baujahr --> Einfluss auf Kaltmiete bzw. grafisch darstellen und analysieren --> Nach Stadt unterscheiden
 - Henrik: Kaltmiete bzw. Quadratmeterpreis nach Parkplatz / Etage / Zimmer / Balkon unterscheiden und analysieren
+- Eventuell die Baujahre in 3 Kategorien einteilen zur besseren Darstellung
 
 - Wie unterscheiden sich die Städte, und wie verhält sich der Durchschnittspreis?
   - Boxplot mit Kaltmiete ~ Stadt
