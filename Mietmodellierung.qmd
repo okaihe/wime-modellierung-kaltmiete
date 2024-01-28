@@ -17,11 +17,12 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = FALSE}
+{css, echo = FALSE}
 .blocktext {
   text-align: justify !important
 }
-```
+
+
 
 ```{r setup}
 #| include: false
@@ -115,6 +116,7 @@ Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Varia
 
 Zuerst soll auf den Zusammenhang von `Kaltmiete` und `Wohnflaeche` geschaut werden, bei zwei metrisch verhältnisskalierten Variablen bietet sich dafür ein Scatterplot an.
 
+
 ```{r}
 gf_point(Kaltmiete ~ Wohnflaeche, data = mieten)
 ```
@@ -169,6 +171,15 @@ gf_histogram(~ Kaltmiete, data = mieten, col = ~ Ort, fill = ~ Ort)
 
 mean(~ Kaltmiete, data = miete_ffm)
 mean(~ Kaltmiete, data = miete_lpz)
+```
+
+Preis pro Quadratmeter (Text TBD):
+
+````{r}
+mieten <- mieten |>
+  mutate(ppqm = Kaltmiete / Wohnflaeche)
+  
+str(mieten)
 ```
 
 Weitere Ideen zur Analyse:

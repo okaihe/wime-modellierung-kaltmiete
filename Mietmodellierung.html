@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Henrik Popp, Kai Herbst, Manuel Zeh">
+
+<title>Modellierung der Kaltmiete</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Mietmodellierung_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Mietmodellierung_files/libs/quarto-html/quarto.js"></script>
+<script src="Mietmodellierung_files/libs/quarto-html/popper.min.js"></script>
+<script src="Mietmodellierung_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Mietmodellierung_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Mietmodellierung_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Mietmodellierung_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Mietmodellierung_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Mietmodellierung_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Mietmodellierung_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Inhaltsverzeichnis</h2>
+   
+  <ul>
+  <li><a href="#aufgabenstellung" id="toc-aufgabenstellung" class="nav-link active" data-scroll-target="#aufgabenstellung">Aufgabenstellung</a></li>
+  <li><a href="#einleitung" id="toc-einleitung" class="nav-link" data-scroll-target="#einleitung">Einleitung</a></li>
+  <li><a href="#datenerhebung" id="toc-datenerhebung" class="nav-link" data-scroll-target="#datenerhebung">Datenerhebung</a></li>
+  <li><a href="#explorative-datenanalyse" id="toc-explorative-datenanalyse" class="nav-link" data-scroll-target="#explorative-datenanalyse">Explorative Datenanalyse</a></li>
+  <li><a href="#modellierung" id="toc-modellierung" class="nav-link" data-scroll-target="#modellierung">Modellierung</a></li>
+  <li><a href="#zusammenfassung" id="toc-zusammenfassung" class="nav-link" data-scroll-target="#zusammenfassung">Zusammenfassung</a></li>
+  <li><a href="#quellen-und-hilfsmittel" id="toc-quellen-und-hilfsmittel" class="nav-link" data-scroll-target="#quellen-und-hilfsmittel">Quellen und Hilfsmittel</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Andere Formate</h2><ul><li><a href="Mietmodellierung.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Modellierung der Kaltmiete</h1>
+<p class="subtitle lead">Vergleich Frankfurt am Main und Leipzig</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor:in</div>
+    <div class="quarto-title-meta-contents">
+             <p>Henrik Popp, Kai Herbst, Manuel Zeh </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">28. Januar 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>{css, echo = FALSE} .blocktext { text-align: justify !important }</p>
+<section id="aufgabenstellung" class="level1">
+<h1>Aufgabenstellung</h1>
+<table class="table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 61%">
+<col style="width: 13%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Abschnitt</th>
+<th>Aufgabe</th>
+<th>Reiner Textumfang</th>
+<th>Erledigt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Einleitung</td>
+<td>Auf inhaltliche Aufgabenstellung eingehen</td>
+<td>0,5 - 1 Seiten</td>
+<td>[✔]</td>
+</tr>
+<tr class="even">
+<td>Datenerhebung</td>
+<td>Wie wurden die Daten erhoben? (Suchfilter, Sortierung)</td>
+<td>1 - 3 Sätze</td>
+<td>[✔]</td>
+</tr>
+<tr class="odd">
+<td>Explorative Datenanalyse</td>
+<td>Analyse + eventl. Datenvorverarbeitung</td>
+<td>1 - 2 Seiten</td>
+<td>[ ]</td>
+</tr>
+<tr class="even">
+<td>Modellierung</td>
+<td>Modellierung + Interpretation</td>
+<td>1 - 2 Seiten.</td>
+<td>[ ]</td>
+</tr>
+<tr class="odd">
+<td>Zusammenfassung</td>
+<td>Gemeinsam kurz zentrale Ergebnisse zusammenfassen + Auf Grenzen der Analyse eingehen</td>
+<td>0,5 - 1 Seiten.</td>
+<td>[ ]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Hier auch noch Literatur recherchieren:
+<ul>
+<li>https://de.statista.com/statistik/daten/studie/258635/umfrage/bruttokaltmiete-bewohnter-wohnungen-in-deutschland-nach-bundeslaendern/</li>
+<li>https://www.deutschlandatlas.bund.de/DE/Karten/Wie-wir-wohnen/040-Mieten.html#_6a54aw429</li>
+<li>https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8053893/</li>
+<li>https://de.statista.com/statistik/daten/studie/262508/umfrage/mietpreise-in-frankfurt-am-main/</li>
+<li>https://de.statista.com/statistik/daten/studie/1312743/umfrage/mieten-in-leipzig-nach-dem-baualter-der-wohnung/</li>
+<li>https://de.statista.com/statistik/daten/studie/535299/umfrage/mietpreise-auf-dem-wohnungsmarkt-in-leipzig/</li>
+<li>https://de.statista.com/statistik/daten/studie/1312730/umfrage/entwicklung-der-angebotsmieten-in-leipzig/</li>
+<li>https://link.springer.com/chapter/10.1007/978-3-658-11757-3_4</li>
+<li>https://www.ifo.de/DocDL/ifoDD_14-06_03-10.pdf</li>
+</ul></li>
+</ul>
+</section>
+<section id="einleitung" class="level1">
+<h1>Einleitung</h1>
+<div class="blocktext">
+<p>In dieser Fallstudie sollen die Kaltmieten der beiden Städte Frankfurt am Main und Leipzig miteinander verglichen und modelliert werden. Ziel ist es, die verschiedenen möglichen Einflussfaktoren auf die Kaltmiete in den jeweiligen Städte zu bestimmen und eine Modellierung der Kaltmiete zu erstellen.</p>
+<p>Zu Beginn wird auf die Datenerhebung eingegangen. Hier soll erklärt werden, woher die verarbeiteten Daten stammen und unter welchen Bedingungen die Daten erhoben wurden. Mit der explorativen Datenanalyse sollen dann die erhobenen Daten beschrieben und veranschaulicht werden. Hierbei wird die Vorverarbeitung der Daten beschrieben, im Anschluss wird mithilfe von Grafiken und dazugehörigen Interpretationen eine Datenanalyse erstellt. Dabei soll unter anderem herausgefunden werden, welche erhobenen Variablen den größten Einfluss auf die Kaltmiete einer Stadt haben oder wie hoch die eventuellen Unterschiede der Mieten in den beiden Städten sind. Den zentralen Teil des Dokuments stellt die Modellierung dar. Hier soll die Kaltmiete modelliert, also durch ein selbsterstelltes statistisches Modell dargestellt werden. Zudem wird das Modell interpretiert. Zum Abschluss werden die Ergebnisse in der Zusammenfassung aufgearbeitet und präsentiert.</p>
+</div>
+</section>
+<section id="datenerhebung" class="level1">
+<h1>Datenerhebung</h1>
+<div class="blocktext">
+<p>Die Datenerhebung fand ausschließlich über den Online-Marktplatz für Wohnungen und Häuser <em><a href="https://www.immobilienscout24.de/">ImmobilienScout24</a></em> statt. Die untersuchten Objekte wurden dabei auf den Immobilientyp <em>Wohnung</em> beschränkt, was als Suchkriterium in der Suchleiste des Portals eingestellt werden kann. Weitere Suchkriterien haben sich auf den <em>Ort</em>, in diesem Fall Frankfurt am Main und Leipzig, und auf den Objekttyp, hier <em>Mieten</em>, beschränkt. Weitere Kriterien wie <em>Anzahl der Zimmer</em>, <em>Fläche</em> oder einem <em>maximalen Preis</em> wurden auf den Standardeinstellungen belassen. Anschließend wurden je Ort der Reihe nach bis zu 45 Objekte in der von ImmobilienScout24 generierten Reihenfolge überpüft und in eine Excel-Datei aufgenommen, die im Folgendem als Basis für die Auswertung dient.</p>
+<p>Aufgenommen in die Datenbasis wurden dabei die folgenden Variablen: der <em>Ort</em>, die <em>Kaltmiete</em> in Euro, die <em>Wohnfläche</em> in Quadratmetern, das Angebot eines <em>Parkplatz</em>, die <em>Etage</em>, Anzahl der <em>Zimmer</em>, Vorhandensein eines <em>Balkon</em>, das <em>Baujahr</em> des Objektes, sowie der entsprechende Link zur Anzeige und dessen Abrufdatum.</p>
+<p>Für die nachfolgenden Auswertungen und Analysen lesen wir zunächst die Excel-Datei ein:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pfad zur Excel-Datei erstellen</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pfad_mieten <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"Mieten.xlsx"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Daten einlesen</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mieten <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(pfad_mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Über die Ausgabe der ersten sechs Eintrage erhalten wir einen Einblick in die Daten:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obere 6 Beobachtungen</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  Ort   Kaltmiete Wohnflaeche Parkplatz Etage Zimmer Balkon Einbaukueche Heizung
+  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;  
+1 Fran…      1800        70   ja        1          2 ja     ja           Fußbod…
+2 Fran…      1500        60   ja        1          1 ja     ja           Zentra…
+3 Fran…      2650       146.  ja        1          3 ja     ja           Fußbod…
+4 Fran…      1700        94   ja        2          3 nein   ja           Fußbod…
+5 Fran…      2000       113.  ja        3          4 ja     ja           Fußbod…
+6 Fran…      1700        84.8 ja        3          3 ja     ja           Fußbod…
+# ℹ 3 more variables: Baujahr &lt;chr&gt;, Link &lt;chr&gt;, Abrufdatum &lt;dttm&gt;</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="explorative-datenanalyse" class="level1">
+<h1>Explorative Datenanalyse</h1>
+<p>Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit <code>str(mieten)</code> die Struktur des Datensatzes angezeigt werden.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [100 × 12] (S3: tbl_df/tbl/data.frame)
+ $ Ort         : chr [1:100] "Frankfurt" "Frankfurt" "Frankfurt" "Frankfurt" ...
+ $ Kaltmiete   : num [1:100] 1800 1500 2650 1700 2000 1700 1480 2800 1080 2600 ...
+ $ Wohnflaeche : num [1:100] 70 60 146 94 113 ...
+ $ Parkplatz   : chr [1:100] "ja" "ja" "ja" "ja" ...
+ $ Etage       : chr [1:100] "1" "1" "1" "2" ...
+ $ Zimmer      : num [1:100] 2 1 3 3 4 3 2 3 2 4 ...
+ $ Balkon      : chr [1:100] "ja" "ja" "ja" "nein" ...
+ $ Einbaukueche: chr [1:100] "ja" "ja" "ja" "ja" ...
+ $ Heizung     : chr [1:100] "Fußbodenheizung" "Zentralheizung" "Fußbodenheizung" "Fußbodenheizung" ...
+ $ Baujahr     : chr [1:100] "2022" "1970" "2017" "-" ...
+ $ Link        : chr [1:100] "https://www.immobilienscout24.de/expose/136299839?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/147138109?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/148020107?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/148019739?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ ...
+ $ Abrufdatum  : POSIXct[1:100], format: "2023-12-28" "2023-12-28" ...</code></pre>
+</div>
+</div>
+<p>Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie <code>Heizung</code> oder <code>Zimmer</code>, als auch metrische verhältnisskalierte Variablen wie <code>Kaltmiete</code> oder <code>Wohnflaeche</code> auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können.</p>
+<p>Zuerst soll auf den Zusammenhang von <code>Kaltmiete</code> und <code>Wohnflaeche</code> geschaut werden, bei zwei metrisch verhältnisskalierten Variablen bietet sich dafür ein Scatterplot an.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Grundsätzlich lässt sich ein positiver Zusammenhang zwischen <code>Kaltmiete</code> und <code>Wohnflaeche</code> erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt. Als nächstes soll das Scatterplot um die Anzahl an Zimmer erweitert werden, hierfür wird das obige Diagramm eingefärbt. Möchte man die Kaltmiete unter Betrachtung der Anzahl an Zimmern darstellen, bietet sich ein Streudiagramm an, da man eine stetige Variable (<code>Kaltmiete</code>) und eine diskrete Variable (<code>Zimmer</code>) hat.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gf_point(Kaltmiete ~ Wohnflaeche, color = ~ Zimmer, data = mieten)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Preis pro Quadratmeter:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mieten <span class="ot">&lt;-</span> mieten <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ppqm =</span> Kaltmiete <span class="sc">/</span> Wohnflaeche)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [100 × 13] (S3: tbl_df/tbl/data.frame)
+ $ Ort         : chr [1:100] "Frankfurt" "Frankfurt" "Frankfurt" "Frankfurt" ...
+ $ Kaltmiete   : num [1:100] 1800 1500 2650 1700 2000 1700 1480 2800 1080 2600 ...
+ $ Wohnflaeche : num [1:100] 70 60 146 94 113 ...
+ $ Parkplatz   : chr [1:100] "ja" "ja" "ja" "ja" ...
+ $ Etage       : chr [1:100] "1" "1" "1" "2" ...
+ $ Zimmer      : num [1:100] 2 1 3 3 4 3 2 3 2 4 ...
+ $ Balkon      : chr [1:100] "ja" "ja" "ja" "nein" ...
+ $ Einbaukueche: chr [1:100] "ja" "ja" "ja" "ja" ...
+ $ Heizung     : chr [1:100] "Fußbodenheizung" "Zentralheizung" "Fußbodenheizung" "Fußbodenheizung" ...
+ $ Baujahr     : chr [1:100] "2022" "1970" "2017" "-" ...
+ $ Link        : chr [1:100] "https://www.immobilienscout24.de/expose/136299839?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/147138109?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/148020107?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/148019739?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ ...
+ $ Abrufdatum  : POSIXct[1:100], format: "2023-12-28" "2023-12-28" ...
+ $ ppqm        : num [1:100] 25.7 25 18.2 18.1 17.7 ...</code></pre>
+</div>
+</div>
+<p>Weitere Ideen zur Analyse: - Kaltmiete pro Quadratmeter nach Stadt berechnen und als eigene Spalte pro Beobachtung hinzufügen + Stichpunkte zur Erklärung (Henrik) - Manuel: Kaltmiete zu Wohnfläche nach Stadt, von Henrik berechnet / Einbauküche / Heizung / Baujahr –&gt; Einfluss auf Kaltmiete bzw. grafisch darstellen und analysieren –&gt; Nach Stadt unterscheiden - Henrik: Kaltmiete bzw. Quadratmeterpreis nach Parkplatz / Etage / Zimmer / Balkon unterscheiden und analysieren</p>
+<ul>
+<li>Wie unterscheiden sich die Städte, und wie verhält sich der Durchschnittspreis?
+<ul>
+<li>Boxplot mit Kaltmiete ~ Stadt</li>
+<li>Boxplot mit Kaltmiete ~ Balkon oder Parkplatz mit Unterscheidung nach Städten –&gt; Ggf. Grafik wieder rausnehmen wenn es keinen großen Unterschied gibt.</li>
+</ul></li>
+<li>Etage analysieren –&gt; Einfluss auf Miete</li>
+<li>Wohnflaeche analysieren</li>
+<li>Baujahr mit Histogramm darstellen –&gt; Farbliche Unterteilung nach Städten</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-8-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(Balkon <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-8-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+</section>
+<section id="modellierung" class="level1">
+<h1>Modellierung</h1>
+<p>Modellieren Sie in diesem Abschnitt die Miete und interpretieren Sie Ihr Ergebnis.</p>
+<p>Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umfang von ca. 0,5–1 Seiten haben, bei Gruppenarbeiten einen von ca. 1–2 Seiten.</p>
+<p>Modell schätzen:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Modell_Mieten <span class="ot">&lt;-</span> <span class="fu">lm</span>(Kaltmiete <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mieten)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Modell_Mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Kaltmiete ~ 1, data = mieten)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-878.8 -572.3 -225.8  371.2 2171.2 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1328.75      70.11   18.95   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 701.1 on 99 degrees of freedom</code></pre>
+</div>
+</div>
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+</section>
+<section id="zusammenfassung" class="level1">
+<h1>Zusammenfassung</h1>
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+<hr>
+</section>
+<section id="quellen-und-hilfsmittel" class="level1">
+<h1>Quellen und Hilfsmittel</h1>
+<p>Führen Sie hier die verwendeten Hilfsmittel sowie die verwendete Literatur auf.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Kopiert");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Kopiert");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
