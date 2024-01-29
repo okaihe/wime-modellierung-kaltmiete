@@ -17,12 +17,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-{css, echo = FALSE}
-.blocktext {
-  text-align: justify !important
-}
-
-
 
 ```{r setup}
 #| include: false
@@ -61,20 +55,14 @@ library(dplyr)
 
 # Einleitung
 
-::: { .blocktext }
-
 In dieser Fallstudie sollen die Kaltmieten der beiden Städte Frankfurt am Main und Leipzig miteinander verglichen und modelliert werden. Ziel ist es, die verschiedenen möglichen Einflussfaktoren auf die Kaltmiete in den jeweiligen Städte zu bestimmen und eine Modellierung der Kaltmiete zu erstellen.
 
 Zu Beginn wird auf die Datenerhebung eingegangen. Hier soll erklärt werden, woher die verarbeiteten Daten stammen und unter welchen Bedingungen die Daten erhoben wurden. Mit der explorativen Datenanalyse sollen dann die erhobenen Daten beschrieben und veranschaulicht werden. Hierbei wird die Vorverarbeitung der Daten beschrieben, im Anschluss wird mithilfe von Grafiken und dazugehörigen Interpretationen eine Datenanalyse erstellt. Dabei soll unter anderem herausgefunden werden, welche erhobenen Variablen den größten Einfluss auf die Kaltmiete einer Stadt haben oder wie hoch die eventuellen Unterschiede der Mieten in den beiden Städten sind.
 Den zentralen Teil des Dokuments stellt die Modellierung dar. Hier soll die Kaltmiete modelliert, also durch ein selbsterstelltes statistisches Modell dargestellt werden. Zudem wird das Modell interpretiert.
 Zum Abschluss werden die Ergebnisse in der Zusammenfassung aufgearbeitet und präsentiert.
 
-:::
-
 
 # Datenerhebung
-
-::: { .blocktext }
 
 Die Datenerhebung fand ausschließlich über den Online-Marktplatz für Wohnungen und Häuser _[ImmobilienScout24](https://www.immobilienscout24.de/)_ statt. Die untersuchten Objekte wurden dabei auf den Immobilientyp _Wohnung_ beschränkt, was als Suchkriterium in der Suchleiste des Portals eingestellt werden kann. Weitere Suchkriterien haben sich auf den _Ort_, in diesem Fall Frankfurt am Main und Leipzig, und auf den Objekttyp, hier _Mieten_, beschränkt. Weitere Kriterien wie _Anzahl der Zimmer_, _Fläche_ oder einem _maximalen Preis_ wurden auf den Standardeinstellungen belassen. Anschließend wurden je Ort der Reihe nach bis zu 45 Objekte in der von ImmobilienScout24 generierten Reihenfolge überpüft und in eine Excel-Datei aufgenommen, die im Folgendem als Basis für die Auswertung dient.
 
@@ -102,7 +90,6 @@ mieten <- read_excel(pfad_mieten)
 head(mieten)
 ```
 
-:::
 
 # Explorative Datenanalyse
 Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit `str(mieten)` die Struktur des Datensatzes angezeigt werden.
@@ -207,6 +194,59 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 
 # Modellierung
 
+Aus den zahlreichen Diagrammen des vorherigen Abschnitts der explorativen Datenanalyse konnten sich bereits diverse Zusammenhänge erkennen lassen. Dieser letzte Teil der Untersuchung der gegebenen Daten beschäftigt sich abschließend mit der Modellierung der Kaltmiete unter Verwendung der zur Verfügung stehenden Variablen wie der Wohnfläche, der Art der Heizung oder dem Vorhandensein eines Balkons. Ziel ist hierbei die Erstellung eines Modells, durch das die Variable `Kaltmiete` bestmöglich erklärt werden kann.
+
+Das ersten Diagramm der explorativen Datenanalyse, in dem die `Kaltmiete` der Inserate zusammen mit deren `Wohnfläche` im Streudiagramm dargestellt wurden, lässt einen positiven Zusammenhang der `Kaltmiete` zur `Wohnfläche` vermuten. In einem ersten einfachen Modell, mit dem dieser Zusammenhang modelliert werden soll, kann aus den Daten beispielsweise der Durchschnitt des Quadratmeterpreises berechnet werden.
+
+```{r}
+sum_wohnflaeche <- sum(~ Wohnflaeche, data = mieten)
+sum_kaltmiete <- sum(~ Kaltmiete, data = mieten)
+price_per_squaremeter <- sum_kaltmiete / sum_wohnflaeche
+```
+
+Damit ergibt sich ersten einfaches Modell für die `Kaltmiete` unter Verwendung der `Wohnfläche` als unabhängige Variable folgende Gleichung:
+
+$$ Kaltmiete = Wohnfläche \cdot `r round(price_per_squaremeter, digits = 2)` € $$
+Wir betrachten das Modell, indem die berechnete Gerade in das Streudiagramm der explorativen Datenanalyse eingezeichnet wird:
+
+```{r}
+pps_x = c(0, 200)
+pps_y = c(0, price_per_squaremeter * 200)
+gf_line(pps_y ~ pps_x, color = "red") |> gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Ort)
+```
+
+Dazu kann noch der Korrelationskoeffizient bestimmt werden.
+
+```{r}
+cor_miete_flaeche = cor(Wohnflaeche ~ Kaltmiete, data = mieten)
+```
+
+Dabei wird festgestellt, dass die `Kaltmiete` zu `r cor_miete_flaeche`% mit der Wohnfläche korreliert. Das Modell kann demnach bereits für einen groben Richtwert verwendet werden. Ziel ist jedoch eine noch genauere Modellierung der Kaltmiete unter Berücksichtigung der weiteren Daten.
+
+Um die weiteren Variablen miteinzubeziehen, verwenden wir die lineare Regression, die mit der `lm()`-Funktion auf die Daten angewendet werden kann. Wir starten zunächst erneut mit der `Kaltmiete` und der `Wohnflaeche`.
+
+```{r}
+km.lm1 <- lm(Kaltmiete ~ Wohnflaeche, data = mieten)
+summary(km.lm1)
+```
+
+Mit einem Bestimmtheitsmaß von $R^2 ~ 0.56$, haben wir mit der linearen Regression allein unter Verwendung der `Wonflaeche` noch kein gutes Modell erzeugt.
+
+Da zu Beginn der explorativen Datenanalyse festgestellt wurde, dass die Kaltmieten zwischen den beiden Orten Frankfurt am Main und Leipzig unter sonst gleichen Bedingungen unterscheidet, soll diese zuerst in die Modellierung miteinbezogen werden.
+
+```{r}
+km.lm2 <- lm(Kaltmiete ~ Wohnflaeche + Ort, data = mieten)
+summary(km.lm2)
+```
+
+Durch das Miteinbeziehen des Ortes steigert sich das Bestimmtheitsmaß bereits auf $R^2 ~ 0.78$. An der Zusammenfassung der Ergebnisse lässt sich außerdem ablesen, dass in Leipzig die Kaltmiete im Schnitt 655,13€ billiger als in Leipzig ist. Das Modell lässt sich nun wie folgt darstellen:
+
+$$ Kaltmiete = 261.03 + Wohnflaeche \cdot 16.57 + \beta1 \cdot -655.13 $$
+
+
+
+# Rest
+
 Modellieren Sie in diesem Abschnitt die Miete und interpretieren Sie Ihr Ergebnis. 
 
 Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umfang von ca. 0,5--1 Seiten haben, bei Gruppenarbeiten einen von ca. 1--2 Seiten.
@@ -214,8 +254,8 @@ Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umf
 Modell schätzen:
 
 ```{r}
-Modell_Mieten <- lm(Kaltmiete ~ 1, data = mieten)
-summary(Modell_Mieten)
+# Modell_Mieten <- lm(Kaltmiete ~ 1, data = mieten)
+# summary(Modell_Mieten)
 ```
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
