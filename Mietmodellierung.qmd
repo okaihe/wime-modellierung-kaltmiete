@@ -173,7 +173,7 @@ mean(~ Kaltmiete, data = miete_ffm)
 mean(~ Kaltmiete, data = miete_lpz)
 ```
 
-#Parkplatz
+## Parkplatz
 ```{r}
 gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten, color = ~ Ort)
 tally(Ort ~ Parkplatz, data = mieten)
@@ -183,7 +183,7 @@ Wohnungen mit Parkplatz sind im Schnitt teurer
 ? Parkplatz in der Kaltmiete enthalten?
 ? Eventuell teurere Wohnung hat eher eine Tiefgarage oder einen sonstigen Stellplatz auf dem Grundstück?
 
-#Balkon
+## Balkon
 ```{r}
 gf_boxplot(Kaltmiete ~ Balkon, data = mieten, color = ~ Ort)
 gf_boxplot(ppqm ~ Balkon, data = mieten, color = ~ Ort)
@@ -194,7 +194,7 @@ Erstes Boxplot zeigt Wohnung mit Balkon sind meist teurer
 Da der Balkon auch zu 25% in die gesamte Wohnflaeche eingerechnet ist, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Hier ist auch ein Zusammenhang zwischen Balkon "Ja" und einen höheren Kaltmiete zu erkennen. 
 ?Interpretation: Balkon steigert Kaltmiete unabhängig von der Wohnfläche. Interessant wäre zusätzlich eine Analyse, wenn Wohnfläcche um die Fläche des Balkons bereinigt wäre. 
 
-# Zimmer
+## Zimmer
 ```{r}
 gf_point(Kaltmiete ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(Wohnflaeche ~ Zimmer, data = mieten, color = ~ Ort)
@@ -203,7 +203,7 @@ gf_point(ppqm ~ Zimmer, data = mieten, color = ~ Ort)
 Insgesamt ist zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. Der Quadratmeterpreis ist bei mehr Zimmern nicht höher. 
 
 
-# Etage
+## Etage
 ```{r}
 gf_boxplot(Kaltmiete ~ Etage, data = mieten)
 ```
