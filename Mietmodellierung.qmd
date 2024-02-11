@@ -92,19 +92,7 @@ head(mieten)
 
 
 # Explorative Datenanalyse
-Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit `str(mieten)` die Struktur des Datensatzes angezeigt werden.
-
-
-
-Einschub (kann noch wo anders platziert werden): 
-Um nicht nur den Gesamtpreis der Kaltmiete zu betrachten wird der Quadratmeterpreis in den Datensatz mit aufgenommen:
-
-````{r}
-mieten <- mieten |>
-  mutate(ppqm = Kaltmiete / Wohnflaeche)
-
-```
-
+Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit `str(mieten)` die Struktur des Datensatzes angezeigt werden. Zudem wird mit dem Befehl `subset` der Datensatz nach Stadt unterteilt, falls im weiteren Verlauf der Analyse eine stadtspezifische Aussage getroffen werden soll.
 
 ```{r}
 str(mieten)
@@ -113,16 +101,20 @@ miete_lpz <- subset(mieten, Ort == "Leipzig")
 ```
 
 Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie `Heizung` oder `Zimmer`, als auch metrische verhältnisskalierte Variablen wie `Kaltmiete` oder `Wohnflaeche` auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können.
+Um nicht nur den Gesamtpreis der Kaltmiete zu betrachten, wird der Quadratmeterpreis mit in den Datensatz aufgenommen:
+
+````{r}
+mieten <- mieten |>
+  mutate(ppqm = Kaltmiete / Wohnflaeche)
+```
 
 Zuerst soll auf den Zusammenhang von `Kaltmiete` und `Wohnflaeche` geschaut werden, bei zwei metrisch verhältnisskalierten Variablen bietet sich dafür ein Scatterplot an.
-
 
 ```{r}
 gf_point(Kaltmiete ~ Wohnflaeche, data = mieten)
 ```
 
 Grundsätzlich lässt sich ein positiver Zusammenhang zwischen `Kaltmiete` und `Wohnflaeche` erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt.
-
 Nun muss dieses Diagramm jedoch um die Information des Ortes erweitert werden, um eine genauere Aussage treffen zu können. Dafür wird der Code um den Zusatz `color = ~ Ort` erweitert:
 
 ```{r}
@@ -136,17 +128,21 @@ gf_boxplot(Kaltmiete ~ Ort, data = mieten)
 ```
 
 Das Boxplot zeigt, dass der Median für die Kaltmiete in Frankfurt deutlich über dem Median von Leipzig liegt. Zudem ist der 1,5-fache Interquartilsabstand bei Frankfurt größer als bei Leipzig, und die Whisker sind bei Frankfurt ebenfalls länger. Für Leipzig gibt es jedoch mehr Ausreißer, nämlich 4, verglichen mit den 2 Ausreißern von Frankfurt.
+Mithilfe der Funktion `mean` kann der Mittelwerte der Mieten in beiden Städten betrachtet werden.
+```{r}
+mean(~ Kaltmiete, data = miete_ffm)
+mean(~ Kaltmiete, data = miete_lpz)
+```
+Der Mittelwert für die Kaltmiete liegt in Frankfurt bei 1.652,82€ und damit mehr als 600€ über dem Kaltmietendurchschnitt von Leipzig (1.011,64€).
 
 Es sollen nun auch die weiteren Variablen untersucht werden, angefangen mit der Variablen `Heizung`. Um die verschiedenen Ausprägungen zu vergleichen und ihre absolute Häufigkeit darzustellen, eignet sich ein Säulendiagramm:
 ```{r}
-# gf_boxplot(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
-# gf_point(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
 gf_bar( ~ Heizung, data = mieten, fill = ~ Ort, position = position_dodge()) + theme(axis.text.x = element_text(angle = 90))
 ```
 
-Das Säulendiagramm zeigt, dass die Fußbodenheizung in Frankfurt am weitesten verbreitet ist, gefolgt von der Zentralheizung und der Fernwärme. In Leipzig sind Gas-Heizung und Zentralheizung gleich häufig vertreten, gefolgt von der Fernwärme. In einigen Beobachtungen und häufiger in Leipzig als in Frankfurt, wurde der Heizungstyp nicht angegeben.
+Das Säulendiagramm zeigt, dass die Fußbodenheizung in Frankfurt am weitesten verbreitet ist, gefolgt von der Zentralheizung und der Fernwärme. In Leipzig ist die Zentralheizung am weitesten verbreitet, gefolgt von der Fußbodenheizung und der Fernwärme. In einigen Beobachtungen und häufiger in Leipzig als in Frankfurt, wurde der Heizungstyp nicht angegeben.
 
-Bei der Variablen `Baujahr` handelt es sich hier um eine diskrete Variable. Aufgrund der Vielzahl an Jahren im Datensatz eignet sich jedoch die Verwendung des tatsächlichen Baujahres nicht, da die Darstellungen sonst sehr unübersichtlich werden. Stattdessen soll eine Klassifizierung in "alt - mittel - neu" vorgenommen werden, um die Baujahre zusammenzufassen.
+Bei der Variablen `Baujahr` handelt es sich hier um eine diskrete Variable. Aufgrund der Vielzahl an verschiedenen Jahren im Datensatz eignet sich jedoch die Verwendung des tatsächlichen Baujahres nicht, da die Darstellungen sonst sehr unübersichtlich werden. Stattdessen soll eine Klassifizierung in "alt - mittel - neu" vorgenommen werden, um die Baujahre zusammenzufassen.
 
 ```{r}
 mieten <- mieten %>%
@@ -160,18 +156,7 @@ mieten <- mieten %>%
 gf_bar( ~ Baujahrgruppe, data = mieten, fill = ~ Ort, position = position_dodge())
 ```
 
-Im Säulendiagramm ist erkennbar, dass die meisten Beobachtungen in Frankfurt in die Kategorie "neu" (Baujahr > 2000) fallen, gefolgt von "alt" (Baujahr < 1970) und "mittel". In Leipzig dominieren die Beobachtungen mit "alt", dann kommen "neue" Baujahre. Es treten in beiden Städten nur wenige Beobachtungen mit Baujahren zwischen 1970 und 2000 auf, in Leipzig wurde das Baujahr häufiger nicht angegeben.
-
-```{r}
-gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Heizung)
-gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Baujahrgruppe)
-# gf_boxplot(Kaltmiete ~ Einbaukueche, data = mieten, color = ~ Ort)
-gf_boxplot(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
-gf_histogram(~ Kaltmiete, data = mieten, col = ~ Ort, fill = ~ Ort)
-
-mean(~ Kaltmiete, data = miete_ffm)
-mean(~ Kaltmiete, data = miete_lpz)
-```
+Im Säulendiagramm ist erkennbar, dass die meisten Beobachtungen in Frankfurt in die Kategorie `neu` (Baujahr > 2000) fallen, gefolgt von `alt` (Baujahr < 1970) und `mittel`. In Leipzig dominieren die Beobachtungen mit `alt`, dann kommen `neu`e Baujahre. Es treten in beiden Städten nur wenige Beobachtungen mit Baujahren zwischen 1970 und 2000 auf.
 
 ## Parkplatz
 ```{r}
