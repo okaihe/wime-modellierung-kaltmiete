@@ -99,9 +99,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#aufgabenstellung" id="toc-aufgabenstellung" class="nav-link active" data-scroll-target="#aufgabenstellung">Aufgabenstellung</a></li>
   <li><a href="#einleitung" id="toc-einleitung" class="nav-link" data-scroll-target="#einleitung">Einleitung</a></li>
   <li><a href="#datenerhebung" id="toc-datenerhebung" class="nav-link" data-scroll-target="#datenerhebung">Datenerhebung</a></li>
-  <li><a href="#explorative-datenanalyse" id="toc-explorative-datenanalyse" class="nav-link" data-scroll-target="#explorative-datenanalyse">Explorative Datenanalyse</a></li>
-  <li><a href="#modellierung" id="toc-modellierung" class="nav-link" data-scroll-target="#modellierung">Modellierung</a></li>
-  <li><a href="#rest" id="toc-rest" class="nav-link" data-scroll-target="#rest">Rest</a></li>
+  <li><a href="#explorative-datenanalyse" id="toc-explorative-datenanalyse" class="nav-link" data-scroll-target="#explorative-datenanalyse">Explorative Datenanalyse</a>
+  <ul class="collapse">
+  <li><a href="#parkplatz" id="toc-parkplatz" class="nav-link" data-scroll-target="#parkplatz">Parkplatz</a></li>
+  <li><a href="#balkon" id="toc-balkon" class="nav-link" data-scroll-target="#balkon">Balkon</a></li>
+  <li><a href="#zimmer" id="toc-zimmer" class="nav-link" data-scroll-target="#zimmer">Zimmer</a></li>
+  <li><a href="#etage" id="toc-etage" class="nav-link" data-scroll-target="#etage">Etage</a></li>
+  </ul></li>
+  <li><a href="#modellierung" id="toc-modellierung" class="nav-link" data-scroll-target="#modellierung">Modellierung</a>
+  <ul class="collapse">
+  <li><a href="#modellierung-über-durchschnittsquadratmeterpreis" id="toc-modellierung-über-durchschnittsquadratmeterpreis" class="nav-link" data-scroll-target="#modellierung-über-durchschnittsquadratmeterpreis">Modellierung über Durchschnittsquadratmeterpreis</a></li>
+  <li><a href="#modellierung-über-die-lineare-regression" id="toc-modellierung-über-die-lineare-regression" class="nav-link" data-scroll-target="#modellierung-über-die-lineare-regression">Modellierung über die lineare Regression</a>
+  <ul class="collapse">
+  <li><a href="#wohnflaeche" id="toc-wohnflaeche" class="nav-link" data-scroll-target="#wohnflaeche">Wohnflaeche</a></li>
+  <li><a href="#ort" id="toc-ort" class="nav-link" data-scroll-target="#ort">Ort</a></li>
+  <li><a href="#weitere-variablen" id="toc-weitere-variablen" class="nav-link" data-scroll-target="#weitere-variablen">Weitere Variablen</a></li>
+  </ul></li>
+  </ul></li>
   <li><a href="#zusammenfassung" id="toc-zusammenfassung" class="nav-link" data-scroll-target="#zusammenfassung">Zusammenfassung</a></li>
   <li><a href="#quellen-und-hilfsmittel" id="toc-quellen-und-hilfsmittel" class="nav-link" data-scroll-target="#quellen-und-hilfsmittel">Quellen und Hilfsmittel</a></li>
   </ul>
@@ -129,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">31. Januar 2024</p>
+      <p class="date">16. Februar 2024</p>
     </div>
   </div>
   
@@ -211,8 +225,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="datenerhebung" class="level1">
 <h1>Datenerhebung</h1>
-<p>Die Datenerhebung fand ausschließlich über den Online-Marktplatz für Wohnungen und Häuser <em><a href="https://www.immobilienscout24.de/">ImmobilienScout24</a></em> statt. Die untersuchten Objekte wurden dabei auf den Immobilientyp <em>Wohnung</em> beschränkt, was als Suchkriterium in der Suchleiste des Portals eingestellt werden kann. Weitere Suchkriterien haben sich auf den <em>Ort</em>, in diesem Fall Frankfurt am Main und Leipzig, und auf den Objekttyp, hier <em>Mieten</em>, beschränkt. Weitere Kriterien wie <em>Anzahl der Zimmer</em>, <em>Fläche</em> oder einem <em>maximalen Preis</em> wurden auf den Standardeinstellungen belassen. Anschließend wurden je Ort der Reihe nach bis zu 45 Objekte in der von ImmobilienScout24 generierten Reihenfolge überpüft und in eine Excel-Datei aufgenommen, die im Folgendem als Basis für die Auswertung dient.</p>
-<p>Aufgenommen in die Datenbasis wurden dabei die folgenden Variablen: der <em>Ort</em>, die <em>Kaltmiete</em> in Euro, die <em>Wohnfläche</em> in Quadratmetern, das Angebot eines <em>Parkplatz</em>, die <em>Etage</em>, Anzahl der <em>Zimmer</em>, Vorhandensein eines <em>Balkon</em>, das <em>Baujahr</em> des Objektes, sowie der entsprechende Link zur Anzeige und dessen Abrufdatum.</p>
+<p>Die Datenerhebung fand ausschließlich über den Online-Marktplatz für Wohnungen und Häuser <em><a href="https://www.immobilienscout24.de/">ImmobilienScout24</a></em> statt. Die untersuchten Objekte wurden dabei auf den Immobilientyp <em>Wohnung</em> beschränkt, was als Suchkriterium in der Suchleiste des Portals eingestellt werden kann. Weitere Suchkriterien haben sich auf den <em>Ort</em>, in diesem Fall Frankfurt am Main und Leipzig, und auf den Objekttyp, hier <em>Mieten</em>, beschränkt. Weitere Kriterien wie <em>Anzahl der Zimmer</em>, <em>Fläche</em> oder einem <em>maximalen Preis</em> wurden auf den Standardeinstellungen belassen. Anschließend wurden je Ort der Reihe nach bis zu 45 Objekte in der von ImmobilienScout24 generierten Reihenfolge überpüft und in eine Excel-Datei aufgenommen, die im Folgenden als Basis für die Auswertung dienen.</p>
+<p>Aufgenommen in die Datenbasis wurden dabei die folgenden Variablen: der <em>Ort</em>, die <em>Kaltmiete</em> in Euro, die <em>Wohnfläche</em> in Quadratmetern, das Angebot eines <em>Parkplatz</em>, die <em>Etage</em>, Anzahl der <em>Zimmer</em>, Vorhandensein eines <em>Balkon</em>, das <em>Baujahr</em> des Objektes sowie der entsprechende Link zur Anzeige und dessen Abrufdatum.</p>
 <p>Für die nachfolgenden Auswertungen und Analysen lesen wir zunächst die Excel-Datei ein:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pfad zur Excel-Datei erstellen</span></span>
@@ -227,47 +241,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 12
   Ort   Kaltmiete Wohnflaeche Parkplatz Etage Zimmer Balkon Einbaukueche Heizung
-  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;  
-1 Fran…      1800        70   ja        1          2 ja     ja           Fußbod…
-2 Fran…      1500        60   ja        1          1 ja     ja           Zentra…
-3 Fran…      2650       146.  ja        1          3 ja     ja           Fußbod…
-4 Fran…      1700        94   ja        2          3 nein   ja           Fußbod…
-5 Fran…      2000       113.  ja        3          4 ja     ja           Fußbod…
-6 Fran…      1700        84.8 ja        3          3 ja     ja           Fußbod…
+  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;  
+1 Fran…      1800        70   ja            1      2 ja     ja           Fußbod…
+2 Fran…      1500        60   ja            1      1 ja     ja           Zentra…
+3 Fran…      2650       146.  ja            1      3 ja     ja           Fußbod…
+4 Fran…      1500        72   nein          1      2 ja     ja           Fußbod…
+5 Fran…      2000       113.  ja            3      4 ja     ja           Fußbod…
+6 Fran…      1700        84.8 ja            3      3 ja     ja           Fußbod…
 # ℹ 3 more variables: Baujahr &lt;dbl&gt;, Link &lt;chr&gt;, Abrufdatum &lt;dttm&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="explorative-datenanalyse" class="level1">
 <h1>Explorative Datenanalyse</h1>
-<p>Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit <code>str(mieten)</code> die Struktur des Datensatzes angezeigt werden.</p>
-<p>Einschub (kann noch wo anders platziert werden): Um nicht nur den Gesamtpreis der Kaltmiete zu betrachten wird der Quadratmeterpreis in den Datensatz mit aufgenommen:</p>
+<p>Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit <code>str(mieten)</code> die Struktur des Datensatzes angezeigt werden. Zudem wird mit dem Befehl <code>subset</code> der Datensatz nach Stadt unterteilt, falls im weiteren Verlauf der Analyse eine stadtspezifische Aussage getroffen werden soll.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mieten <span class="ot">&lt;-</span> mieten <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ppqm =</span> Kaltmiete <span class="sc">/</span> Wohnflaeche)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>tibble [100 × 13] (S3: tbl_df/tbl/data.frame)
- $ Ort         : chr [1:100] "Frankfurt" "Frankfurt" "Frankfurt" "Frankfurt" ...
- $ Kaltmiete   : num [1:100] 1800 1500 2650 1700 2000 1700 1480 2800 1080 2600 ...
- $ Wohnflaeche : num [1:100] 70 60 146 94 113 ...
- $ Parkplatz   : chr [1:100] "ja" "ja" "ja" "ja" ...
- $ Etage       : chr [1:100] "1" "1" "1" "2" ...
- $ Zimmer      : num [1:100] 2 1 3 3 4 3 2 3 2 4 ...
- $ Balkon      : chr [1:100] "ja" "ja" "ja" "nein" ...
- $ Einbaukueche: chr [1:100] "ja" "ja" "ja" "ja" ...
- $ Heizung     : chr [1:100] "Fußbodenheizung" "Zentralheizung" "Fußbodenheizung" "Fußbodenheizung" ...
- $ Baujahr     : num [1:100] 2022 1970 2017 NA 2015 ...
- $ Link        : chr [1:100] "https://www.immobilienscout24.de/expose/136299839?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/147138109?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/148020107?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/148019739?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ ...
- $ Abrufdatum  : POSIXct[1:100], format: "2023-12-28" "2023-12-28" ...
- $ ppqm        : num [1:100] 25.7 25 18.2 18.1 17.7 ...</code></pre>
+<pre><code>tibble [98 × 12] (S3: tbl_df/tbl/data.frame)
+ $ Ort         : chr [1:98] "Frankfurt" "Frankfurt" "Frankfurt" "Frankfurt" ...
+ $ Kaltmiete   : num [1:98] 1800 1500 2650 1500 2000 1700 1480 2800 1080 2600 ...
+ $ Wohnflaeche : num [1:98] 70 60 146 72 113 ...
+ $ Parkplatz   : chr [1:98] "ja" "ja" "ja" "nein" ...
+ $ Etage       : num [1:98] 1 1 1 1 3 3 9 5 4 3 ...
+ $ Zimmer      : num [1:98] 2 1 3 2 4 3 2 3 2 4 ...
+ $ Balkon      : chr [1:98] "ja" "ja" "ja" "ja" ...
+ $ Einbaukueche: chr [1:98] "ja" "ja" "ja" "ja" ...
+ $ Heizung     : chr [1:98] "Fußbodenheizung" "Zentralheizung" "Fußbodenheizung" "Fußbodenheizung" ...
+ $ Baujahr     : num [1:98] 2022 1970 2017 2021 2015 ...
+ $ Link        : chr [1:98] "https://www.immobilienscout24.de/expose/136299839?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/147138109?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/148020107?referrer=RESULT_LIST_LISTING&amp;searchId=69ea3df3-e89a-3ab4-867f"| __truncated__ "https://www.immobilienscout24.de/expose/148760443?referrer=RESULT_LIST_LISTING&amp;searchId=85c7de5d-6a12-34e0-852a"| __truncated__ ...
+ $ Abrufdatum  : POSIXct[1:98], format: "2023-12-28" "2023-12-28" ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>miete_ffm <span class="ot">&lt;-</span> <span class="fu">subset</span>(mieten, Ort <span class="sc">==</span> <span class="st">"Frankfurt"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>miete_lpz <span class="ot">&lt;-</span> <span class="fu">subset</span>(mieten, Ort <span class="sc">==</span> <span class="st">"Leipzig"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>miete_ffm <span class="ot">&lt;-</span> <span class="fu">subset</span>(mieten, Ort <span class="sc">==</span> <span class="st">"Frankfurt"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>miete_lpz <span class="ot">&lt;-</span> <span class="fu">subset</span>(mieten, Ort <span class="sc">==</span> <span class="st">"Leipzig"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie <code>Heizung</code> oder <code>Zimmer</code>, als auch metrische verhältnisskalierte Variablen wie <code>Kaltmiete</code> oder <code>Wohnflaeche</code> auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können.</p>
+<p>Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie <code>Heizung</code> oder <code>Zimmer</code>, als auch metrische verhältnisskalierte Variablen wie <code>Kaltmiete</code> oder <code>Wohnflaeche</code> auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können. Um nicht nur den Gesamtpreis der Kaltmiete zu betrachten, wird der Quadratmeterpreis mit in den Datensatz aufgenommen:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mieten <span class="ot">&lt;-</span> mieten <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ppqm =</span> Kaltmiete <span class="sc">/</span> Wohnflaeche)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Zuerst soll auf den Zusammenhang von <code>Kaltmiete</code> und <code>Wohnflaeche</code> geschaut werden, bei zwei metrisch verhältnisskalierten Variablen bietet sich dafür ein Scatterplot an.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -275,8 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Grundsätzlich lässt sich ein positiver Zusammenhang zwischen <code>Kaltmiete</code> und <code>Wohnflaeche</code> erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt.</p>
-<p>Nun muss dieses Diagramm jedoch um die Information des Ortes erweitert werden, um eine genauere Aussage treffen zu können. Dafür wird der Code um den Zusatz <code>color = ~ Ort</code> erweitert:</p>
+<p>Grundsätzlich lässt sich ein positiver Zusammenhang zwischen <code>Kaltmiete</code> und <code>Wohnflaeche</code> erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt. Nun muss dieses Diagramm jedoch um die Information des Ortes erweitert werden, um eine genauere Aussage treffen zu können. Dafür wird der Code um den Zusatz <code>color = ~ Ort</code> erweitert:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -290,158 +301,153 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Das Boxplot zeigt, dass der Median für die Kaltmiete in Frankfurt deutlich über dem Median von Leipzig liegt. Zudem ist der 1,5-fache Interquartilsabstand bei Frankfurt größer als bei Leipzig, und die Whisker sind bei Frankfurt ebenfalls länger. Für Leipzig gibt es jedoch mehr Ausreißer, nämlich 4, verglichen mit den 2 Ausreißern von Frankfurt.</p>
+<p>Das Boxplot zeigt, dass der Median für die Kaltmiete in Frankfurt deutlich über dem Median von Leipzig liegt. Zudem ist der 1,5-fache Interquartilsabstand bei Frankfurt größer als bei Leipzig, und die Whisker sind bei Frankfurt ebenfalls länger. Für Leipzig gibt es jedoch mehr Ausreißer, nämlich 4, verglichen mit den 2 Ausreißern von Frankfurt. Mithilfe der Funktion <code>mean</code> kann der Mittelwerte der Mieten in beiden Städten betrachtet werden.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="sc">~</span> Kaltmiete, <span class="at">data =</span> miete_ffm)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1652.821</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="sc">~</span> Kaltmiete, <span class="at">data =</span> miete_lpz)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1019.461</code></pre>
+</div>
+</div>
+<p>Der Mittelwert für die Kaltmiete liegt in Frankfurt bei 1.652,82€ und damit mehr als 600€ über dem Kaltmietendurchschnitt von Leipzig (1.011,64€).</p>
 <p>Es sollen nun auch die weiteren Variablen untersucht werden, angefangen mit der Variablen <code>Heizung</code>. Um die verschiedenen Ausprägungen zu vergleichen und ihre absolute Häufigkeit darzustellen, eignet sich ein Säulendiagramm:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gf_boxplot(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># gf_point(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>( <span class="sc">~</span> Heizung, <span class="at">data =</span> mieten, <span class="at">fill =</span> <span class="sc">~</span> Ort, <span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Das Säulendiagramm zeigt, dass die Fußbodenheizung in Frankfurt am weitesten verbreitet ist, gefolgt von der Zentralheizung und der Fernwärme. In Leipzig sind Gas-Heizung und Zentralheizung gleich häufig vertreten, gefolgt von der Fernwärme. In einigen Beobachtungen und häufiger in Leipzig als in Frankfurt, wurde der Heizungstyp nicht angegeben.</p>
-<p>Bei der Variablen <code>Baujahr</code> handelt es sich hier um eine diskrete Variable. Aufgrund der Vielzahl an Jahren im Datensatz eignet sich jedoch die Verwendung des tatsächlichen Baujahres nicht, da die Darstellungen sonst sehr unübersichtlich werden. Stattdessen soll eine Klassifizierung in “alt - mittel - neu” vorgenommen werden, um die Baujahre zusammenzufassen.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mieten <span class="ot">&lt;-</span> mieten <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Baujahrgruppe =</span> <span class="fu">case_when</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(Baujahr) <span class="sc">~</span> <span class="st">"NA"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.integer</span>(Baujahr) <span class="sc">&lt;</span> <span class="dv">1970</span> <span class="sc">~</span> <span class="st">"alt"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">between</span>(<span class="fu">as.integer</span>(Baujahr), <span class="dv">1970</span>, <span class="dv">2000</span>) <span class="sc">~</span> <span class="st">"mittel"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"neu"</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>( <span class="sc">~</span> Baujahrgruppe, <span class="at">data =</span> mieten, <span class="at">fill =</span> <span class="sc">~</span> Ort, <span class="at">position =</span> <span class="fu">position_dodge</span>())</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>( <span class="sc">~</span> Heizung, <span class="at">data =</span> mieten, <span class="at">fill =</span> <span class="sc">~</span> Ort, <span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Im Säulendiagramm ist erkennbar, dass die meisten Beobachtungen in Frankfurt in die Kategorie “neu” (Baujahr &gt; 2000) fallen, gefolgt von “alt” (Baujahr &lt; 1970) und “mittel”. In Leipzig dominieren die Beobachtungen mit “alt”, dann kommen “neue” Baujahre. Es treten in beiden Städten nur wenige Beobachtungen mit Baujahren zwischen 1970 und 2000 auf, in Leipzig wurde das Baujahr häufiger nicht angegeben.</p>
+<p>Das Säulendiagramm zeigt, dass die Fußbodenheizung in Frankfurt am weitesten verbreitet ist, gefolgt von der Zentralheizung und der Fernwärme. In Leipzig ist die Zentralheizung am weitesten verbreitet, gefolgt von der Fußbodenheizung und der Fernwärme. In einigen Beobachtungen und häufiger in Leipzig als in Frankfurt, wurde der Heizungstyp nicht angegeben.</p>
+<p>Bei der Variablen <code>Baujahr</code> handelt es sich hier um eine diskrete Variable. Aufgrund der Vielzahl an verschiedenen Jahren im Datensatz eignet sich jedoch die Verwendung des tatsächlichen Baujahres nicht, da die Darstellungen sonst sehr unübersichtlich werden. Stattdessen soll eine Klassifizierung in “alt - mittel - neu” vorgenommen werden, um die Baujahre zusammenzufassen.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Heizung)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mieten <span class="ot">&lt;-</span> mieten <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Baujahrgruppe =</span> <span class="fu">case_when</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(Baujahr) <span class="sc">~</span> <span class="st">"NA"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.integer</span>(Baujahr) <span class="sc">&lt;</span> <span class="dv">1970</span> <span class="sc">~</span> <span class="st">"alt"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">between</span>(<span class="fu">as.integer</span>(Baujahr), <span class="dv">1970</span>, <span class="dv">2000</span>) <span class="sc">~</span> <span class="st">"mittel"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"neu"</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>( <span class="sc">~</span> Baujahrgruppe, <span class="at">data =</span> mieten, <span class="at">fill =</span> <span class="sc">~</span> Ort, <span class="at">position =</span> <span class="fu">position_dodge</span>())</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Baujahrgruppe)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gf_boxplot(Kaltmiete ~ Einbaukueche, data = mieten, color = ~ Ort)</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Heizung, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>(<span class="sc">~</span> Kaltmiete, <span class="at">data =</span> mieten, <span class="at">col =</span> <span class="sc">~</span> Ort, <span class="at">fill =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-11-4.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="sc">~</span> Kaltmiete, <span class="at">data =</span> miete_ffm)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1652.121</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="sc">~</span> Kaltmiete, <span class="at">data =</span> miete_lpz)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1005.372</code></pre>
-</div>
-</div>
-<p>Weitere Ideen zur Analyse: - Kaltmiete pro Quadratmeter nach Stadt berechnen und als eigene Spalte pro Beobachtung hinzufügen + Stichpunkte zur Erklärung (Henrik) - Manuel: Kaltmiete zu Wohnfläche nach Stadt, von Henrik berechnet / Einbauküche / Heizung / Baujahr –&gt; Einfluss auf Kaltmiete bzw. grafisch darstellen und analysieren –&gt; Nach Stadt unterscheiden - Henrik: Kaltmiete bzw. Quadratmeterpreis nach Parkplatz / Etage / Zimmer / Balkon unterscheiden und analysieren - Eventuell die Baujahre in 3 Kategorien einteilen zur besseren Darstellung</p>
-<ul>
-<li>Wie unterscheiden sich die Städte, und wie verhält sich der Durchschnittspreis?
-<ul>
-<li>Boxplot mit Kaltmiete ~ Stadt</li>
-<li>Boxplot mit Kaltmiete ~ Balkon oder Parkplatz mit Unterscheidung nach Städten –&gt; Ggf. Grafik wieder rausnehmen wenn es keinen großen Unterschied gibt.</li>
-</ul></li>
-<li>Etage analysieren –&gt; Einfluss auf Miete</li>
-<li>Wohnflaeche analysieren</li>
-<li>Baujahr mit Histogramm darstellen –&gt; Farbliche Unterteilung nach Städten</li>
-</ul>
-<p>#Parkplatz</p>
+<p>Im Säulendiagramm ist erkennbar, dass die meisten Beobachtungen in Frankfurt in die Kategorie <code>neu</code> (Baujahr &gt; 2000) fallen, gefolgt von <code>alt</code> (Baujahr &lt; 1970) und <code>mittel</code>. In Leipzig dominieren die Beobachtungen mit <code>alt</code>, dann kommen <code>neu</code>e Baujahre. Es treten in beiden Städten nur wenige Beobachtungen mit Baujahren zwischen 1970 und 2000 auf.</p>
+<section id="parkplatz" class="level2">
+<h2 class="anchored" data-anchor-id="parkplatz">Parkplatz</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(Ort <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(Ort <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Parkplatz
 Ort         ja nein
-  Frankfurt 28   22
-  Leipzig   20   30</code></pre>
+  Frankfurt 26   24
+  Leipzig   17   31</code></pre>
 </div>
 </div>
 <p>Klare Tendenz in beiden Städten Wohnungen mit Parkplatz sind im Schnitt teurer ? Parkplatz in der Kaltmiete enthalten? ? Eventuell teurere Wohnung hat eher eine Tiefgarage oder einen sonstigen Stellplatz auf dem Grundstück?</p>
-<p>#Balkon</p>
+</section>
+<section id="balkon" class="level2">
+<h2 class="anchored" data-anchor-id="balkon">Balkon</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(ppqm <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(ppqm <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(Ort <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(Ort <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Balkon
 Ort         ja nein
-  Frankfurt 35   15
-  Leipzig   30   20</code></pre>
+  Frankfurt 37   13
+  Leipzig   29   19</code></pre>
 </div>
 </div>
 <p>Erstes Boxplot zeigt Wohnung mit Balkon sind meist teurer Da der Balkon auch zu 25% in die gesamte Wohnflaeche eingerechnet ist, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Hier ist auch ein Zusammenhang zwischen Balkon “Ja” und einen höheren Kaltmiete zu erkennen. ?Interpretation: Balkon steigert Kaltmiete unabhängig von der Wohnfläche. Interessant wäre zusätzlich eine Analyse, wenn Wohnfläcche um die Fläche des Balkons bereinigt wäre.</p>
-<p>#Zimmer</p>
+</section>
+<section id="zimmer" class="level2">
+<h2 class="anchored" data-anchor-id="zimmer">Zimmer</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Wohnflaeche <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Wohnflaeche <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(ppqm <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(ppqm <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-14-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Insgesamt ist zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. Der Quadratmeterpreis ist bei mehr Zimmern nicht höher.</p>
-<p>#Etage</p>
+</section>
+<section id="etage" class="level2">
+<h2 class="anchored" data-anchor-id="etage">Etage</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Etage, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Etage, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Continuous x aesthetic
+ℹ did you forget `aes(group = ...)`?</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Schlecht bis gar nicht beschreibbar/interpretierbar</p>
 </section>
+</section>
 <section id="modellierung" class="level1">
 <h1>Modellierung</h1>
 <p>Aus den zahlreichen Diagrammen des vorherigen Abschnitts der explorativen Datenanalyse konnten sich bereits diverse Zusammenhänge erkennen lassen. Dieser letzte Teil der Untersuchung der gegebenen Daten beschäftigt sich abschließend mit der Modellierung der Kaltmiete unter Verwendung der zur Verfügung stehenden Variablen wie der Wohnfläche, der Art der Heizung oder dem Vorhandensein eines Balkons. Ziel ist hierbei die Erstellung eines Modells, durch das die Variable <code>Kaltmiete</code> bestmöglich erklärt werden kann.</p>
-<p>Das ersten Diagramm der explorativen Datenanalyse, in dem die <code>Kaltmiete</code> der Inserate zusammen mit deren <code>Wohnfläche</code> im Streudiagramm dargestellt wurden, lässt einen positiven Zusammenhang der <code>Kaltmiete</code> zur <code>Wohnfläche</code> vermuten. In einem ersten einfachen Modell, mit dem dieser Zusammenhang modelliert werden soll, kann aus den Daten beispielsweise der Durchschnitt des Quadratmeterpreises berechnet werden.</p>
+<section id="modellierung-über-durchschnittsquadratmeterpreis" class="level2">
+<h2 class="anchored" data-anchor-id="modellierung-über-durchschnittsquadratmeterpreis">Modellierung über Durchschnittsquadratmeterpreis</h2>
+<p>Das erste Diagramm der explorativen Datenanalyse, in dem die <code>Kaltmiete</code> der Inserate zusammen mit deren <code>Wohnfläche</code> im Streudiagramm dargestellt wurden, lässt einen positiven Zusammenhang der <code>Kaltmiete</code> zur <code>Wohnfläche</code> vermuten. In einem ersten einfachen Modell, mit dem dieser Zusammenhang modelliert werden soll, kann aus den Daten beispielsweise der Durchschnitt des Quadratmeterpreises berechnet werden.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sum_wohnflaeche <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sum_kaltmiete <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">~</span> Kaltmiete, <span class="at">data =</span> mieten)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>price_per_squaremeter <span class="ot">&lt;-</span> sum_kaltmiete <span class="sc">/</span> sum_wohnflaeche</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sum_wohnflaeche <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>sum_kaltmiete <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">~</span> Kaltmiete, <span class="at">data =</span> mieten)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>price_per_squaremeter <span class="ot">&lt;-</span> sum_kaltmiete <span class="sc">/</span> sum_wohnflaeche</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Damit ergibt sich ersten einfaches Modell für die <code>Kaltmiete</code> unter Verwendung der <code>Wohnfläche</code> als unabhängige Variable folgende Gleichung:</p>
-<p><span class="math display"> Kaltmiete = Wohnfläche \cdot 15.78 € </span> Wir betrachten das Modell, indem die berechnete Gerade in das Streudiagramm der explorativen Datenanalyse eingezeichnet wird:</p>
+<p>Damit ergibt sich als ersten einfaches Modell für die <code>Kaltmiete</code> unter Verwendung der <code>Wohnfläche</code> als unabhängige Variable folgende Gleichung:</p>
+<p><span class="math display"> Kaltmiete = Wohnfläche \cdot 15.76 € </span> Wir betrachten das Modell, indem die berechnete Gerade in das Streudiagramm der explorativen Datenanalyse eingezeichnet wird:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>pps_x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">200</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>pps_y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, price_per_squaremeter <span class="sc">*</span> <span class="dv">200</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_line</span>(pps_y <span class="sc">~</span> pps_x, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">|&gt;</span> <span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>pps_x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">200</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>pps_y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, price_per_squaremeter <span class="sc">*</span> <span class="dv">200</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_line</span>(pps_y <span class="sc">~</span> pps_x, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort) <span class="sc">|&gt;</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>(<span class="at">x =</span> <span class="st">"Wohnfläche in Quadratmeter"</span>, </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Mietpreis in Euro"</span>, </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">"Modellierung über Durchschnittspreis"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Dazu kann noch der Korrelationskoeffizient bestimmt werden.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>cor_miete_flaeche <span class="ot">=</span> <span class="fu">cor</span>(Wohnflaeche <span class="sc">~</span> Kaltmiete, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cor_miete_flaeche <span class="ot">=</span> <span class="fu">cor</span>(Wohnflaeche <span class="sc">~</span> Kaltmiete, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Dabei wird festgestellt, dass die <code>Kaltmiete</code> zu 0.7500624% mit der Wohnfläche korreliert. Das Modell kann demnach bereits für einen groben Richtwert verwendet werden. Ziel ist jedoch eine noch genauere Modellierung der Kaltmiete unter Berücksichtigung der weiteren Daten.</p>
-<p>Um die weiteren Variablen miteinzubeziehen, verwenden wir die lineare Regression, die mit der <code>lm()</code>-Funktion auf die Daten angewendet werden kann. Wir starten zunächst erneut mit der <code>Kaltmiete</code> und der <code>Wohnflaeche</code>.</p>
+<p>Dabei wird festgestellt, dass die <code>Kaltmiete</code> zu 74.54% mit der Wohnfläche korreliert. Das Modell kann demnach bereits für einen groben Richtwert verwendet werden. Ziel ist jedoch eine noch genauere Modellierung der Kaltmiete unter Berücksichtigung der weiteren Daten.</p>
+</section>
+<section id="modellierung-über-die-lineare-regression" class="level2">
+<h2 class="anchored" data-anchor-id="modellierung-über-die-lineare-regression">Modellierung über die lineare Regression</h2>
+<p>Um die weiteren Variablen miteinzubeziehen, verwenden wir die lineare Regression, die mit der <code>lm()</code>-Funktion auf die Daten angewendet werden kann.</p>
+<section id="wohnflaeche" class="level3">
+<h3 class="anchored" data-anchor-id="wohnflaeche">Wohnflaeche</h3>
+<p>Wir starten zunächst erneut mit der <code>Kaltmiete</code> und der jeweils dazugehörigen <code>Wohnflaeche</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>km.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(km.lm1)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>km.lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(km.lm1)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -449,60 +455,161 @@ lm(formula = Kaltmiete ~ Wohnflaeche, data = mieten)
 
 Residuals:
    Min     1Q Median     3Q    Max 
--819.6 -306.4 -115.6  296.1 1819.5 
+-742.4 -295.9 -123.8  345.7 1817.6 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  -59.612    132.152  -0.451    0.653    
-Wohnflaeche   16.483      1.468  11.227   &lt;2e-16 ***
+(Intercept)   24.403    129.718   0.188    0.851    
+Wohnflaeche   15.469      1.412  10.956   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 466 on 98 degrees of freedom
-Multiple R-squared:  0.5626,    Adjusted R-squared:  0.5581 
-F-statistic:   126 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 479.8 on 96 degrees of freedom
+Multiple R-squared:  0.5556,    Adjusted R-squared:  0.551 
+F-statistic:   120 on 1 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>Mit einem Bestimmtheitsmaß von <span class="math inline">R^2 ~ 0.56</span>, haben wir mit der linearen Regression allein unter Verwendung der <code>Wonflaeche</code> noch kein gutes Modell erzeugt.</p>
-<p>Da zu Beginn der explorativen Datenanalyse festgestellt wurde, dass die Kaltmieten zwischen den beiden Orten Frankfurt am Main und Leipzig unter sonst gleichen Bedingungen unterscheidet, soll diese zuerst in die Modellierung miteinbezogen werden.</p>
+<p>Mit einem Bestimmtheitsmaß von <span class="math inline">R^2 = 0.55</span>, haben wir mit der linearen Regression allein unter Verwendung der <code>Wonflaeche</code> noch kein gutes Modell erzeugt.</p>
+</section>
+<section id="ort" class="level3">
+<h3 class="anchored" data-anchor-id="ort">Ort</h3>
+<p>Da zu Beginn der explorativen Datenanalyse festgestellt wurde, dass sich die Kaltmieten zwischen den beiden Orten Frankfurt am Main und Leipzig unter sonst gleichen Bedingungen bereits stark unterscheidet, soll diese zuerst in die Modellierung miteinbezogen werden.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>km.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche <span class="sc">+</span> Ort, <span class="at">data =</span> mieten)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(km.lm2)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>km.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche <span class="sc">+</span> Ort, <span class="at">data =</span> mieten)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(km.lm2)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 lm(formula = Kaltmiete ~ Wohnflaeche + Ort, data = mieten)
 
 Residuals:
-   Min     1Q Median     3Q    Max 
--730.6 -192.8   22.2  177.1 1492.2 
+    Min      1Q  Median      3Q     Max 
+-640.01 -279.07   36.35  188.68 1492.90 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  261.025     98.958   2.638  0.00972 ** 
-Wohnflaeche   16.565      1.039  15.940  &lt; 2e-16 ***
-OrtLeipzig  -655.134     65.978  -9.930  &lt; 2e-16 ***
+(Intercept)  325.853     98.305   3.315   0.0013 ** 
+Wohnflaeche   15.756      1.014  15.540  &lt; 2e-16 ***
+OrtLeipzig  -665.433     69.627  -9.557 1.46e-15 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 329.9 on 97 degrees of freedom
-Multiple R-squared:  0.7831,    Adjusted R-squared:  0.7786 
-F-statistic: 175.1 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 344.4 on 95 degrees of freedom
+Multiple R-squared:  0.7734,    Adjusted R-squared:  0.7687 
+F-statistic: 162.2 on 2 and 95 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>Durch das Miteinbeziehen des Ortes steigert sich das Bestimmtheitsmaß bereits auf <span class="math inline">R^2 ~ 0.78</span>. An der Zusammenfassung der Ergebnisse lässt sich außerdem ablesen, dass in Leipzig die Kaltmiete im Schnitt 655,13€ billiger als in Leipzig ist. Das Modell lässt sich nun wie folgt darstellen:</p>
-<p><span class="math display"> Kaltmiete = 261.03 + Wohnflaeche \cdot 16.57 + \beta1 \cdot -655.13 </span></p>
-</section>
-<section id="rest" class="level1">
-<h1>Rest</h1>
-<p>Modellieren Sie in diesem Abschnitt die Miete und interpretieren Sie Ihr Ergebnis.</p>
-<p>Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umfang von ca. 0,5–1 Seiten haben, bei Gruppenarbeiten einen von ca. 1–2 Seiten.</p>
-<p>Modell schätzen:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell_Mieten &lt;- lm(Kaltmiete ~ 1, data = mieten)</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(Modell_Mieten)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>km.lm2.coef <span class="ot">&lt;-</span> <span class="fu">coef</span>(km.lm2)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(km.lm2.coef)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) Wohnflaeche  OrtLeipzig 
+   325.8526     15.7562   -665.4331 </code></pre>
 </div>
-<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+</div>
+<p>it dem Miteinbeziehen der Indekatorvariable <span class="math inline">x2</span> beziehungsweise der kategorialen Variable des Ortes erhalten wir ein Bestimmtheitsmaß von <span class="math inline">R^2 = 0.77</span>. Die Variation des Mietpreises kann also zu <span class="math inline">78</span>% durch den Mietpreis und dem Ort erklärt werden. An der Zusammenfassung der Ergebnisse lässt sich außerdem ablesen, dass in Leipzig die Kaltmiete im Mittelwert 655,13€ billiger als in Leipzig ist. Das Modell lässt sich nun wie folgt darstellen:</p>
+<p><span class="math display">
+\hat{y}_i =
+325.85
++ x1_i \cdot
+15.76
+-665.43 \cdot
+\begin{cases}
+\text{1}: &amp; \text{ $x2_i = Leipzig$}\\
+\text{0}: &amp; \text{ $x2_i = Frankfurt$}
+\end{cases}
+</span></p>
+<p>Wobei <span class="math inline">x1_i</span> die <code>Wohnflaeche</code> und <span class="math inline">x2_i</span> entsprechend den <code>Wohnort</code> darstellt.</p>
+<p>Entsprechend dem berechneten P-Wert von <span class="math inline">3.68 \cdot 10^(-16)</span> kann das Ergebnis in Bezug auf den Wohnort unter Verwendung eines Signifikanzniveaus von <span class="math inline">5\%</span> als statistisch signifikant bezeichnet werden. Die <span class="math inline">H_0</span>-Hypothese <span class="math inline">\mu_{Frankfurt} = \mu_{Leipzig}</span> kann somit verworfen werden.</p>
+<p>Grafisch erhalten wir dadurch die zwei Geraden, abhängig des Ortes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>frankfurt.x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">200</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>frankfurt.y <span class="ot">=</span> <span class="fu">c</span>(km.lm2.coef[<span class="dv">1</span>] <span class="sc">+</span> km.lm2.coef[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">0</span> <span class="sc">+</span> km.lm2.coef[<span class="dv">3</span>] <span class="sc">*</span> <span class="dv">0</span>, km.lm2.coef[<span class="dv">1</span>] <span class="sc">+</span> km.lm2.coef[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">200</span> <span class="sc">+</span> km.lm2.coef[<span class="dv">3</span>] <span class="sc">*</span> <span class="dv">0</span> )</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>leipzig.x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">200</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>leipzig.y <span class="ot">=</span> <span class="fu">c</span>(km.lm2.coef[<span class="dv">1</span>] <span class="sc">+</span> km.lm2.coef[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">0</span> <span class="sc">+</span> km.lm2.coef[<span class="dv">3</span>] <span class="sc">*</span> <span class="dv">1</span>, km.lm2.coef[<span class="dv">1</span>] <span class="sc">+</span> km.lm2.coef[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">200</span> <span class="sc">+</span> km.lm2.coef[<span class="dv">3</span>] <span class="sc">*</span> <span class="dv">1</span> )</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>pps_y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, price_per_squaremeter <span class="sc">*</span> <span class="dv">200</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_line</span>(frankfurt.y <span class="sc">~</span> frankfurt.x, <span class="at">color =</span> <span class="st">"orange"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(leipzig.y <span class="sc">~</span> leipzig.x, <span class="at">color =</span> <span class="st">"lightblue"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Sowohl grafisch als auch am Bestimmtheitsmaß ist bereits sichtbar, dass die Modellierung über die Größe der Immobilien zusammen mit dem jeweiligen Ort einen großen Teil des Mietpreises erklären kann.</p>
+</section>
+<section id="weitere-variablen" class="level3">
+<h3 class="anchored" data-anchor-id="weitere-variablen">Weitere Variablen</h3>
+<p>Zuletzt werden die weiteren Variablen in die lineare Regression miteinbezogen und das daraus entstehende Modell betrachtet und interpretiert. Wir verwenden nun zusätzlich die Informationen bezüglich des <code>Parkplatzes</code>, der Anzahl der Zimmer, des <code>Baujahres</code>, das Vorhandensein eines Balkons und der <code>Etage</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>km.lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Kaltmiete <span class="sc">~</span> Wohnflaeche <span class="sc">+</span> Ort <span class="sc">+</span> Parkplatz <span class="sc">+</span> Balkon <span class="sc">+</span> Baujahr <span class="sc">+</span> Etage <span class="sc">+</span> Zimmer <span class="sc">+</span> Heizung, <span class="at">data =</span> mieten)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(km.lm3)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Kaltmiete ~ Wohnflaeche + Ort + Parkplatz + Balkon + 
+    Baujahr + Etage + Zimmer + Heizung, data = mieten)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-461.26 -188.96  -42.04  160.67  766.81 
+
+Coefficients:
+                           Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)              -3620.3704  1580.1647  -2.291  0.02452 *  
+Wohnflaeche                 16.9243     1.3807  12.258  &lt; 2e-16 ***
+OrtLeipzig                -466.3345    70.2276  -6.640 3.17e-09 ***
+Parkplatznein             -149.0587    69.5677  -2.143  0.03511 *  
+Balkonnein                  28.5883    69.1350   0.414  0.68031    
+Baujahr                      2.0359     0.7735   2.632  0.01014 *  
+Etage                       23.3075     6.7295   3.463  0.00085 ***
+Zimmer                     -71.6654    47.1581  -1.520  0.13244    
+HeizungEtagenheizung         3.9650   242.2408   0.016  0.98698    
+HeizungFernwärme          -176.2000   130.4222  -1.351  0.18041    
+HeizungFußbodenheizung     -20.6200   126.5903  -0.163  0.87101    
+HeizungGasheizung          176.2957   167.9711   1.050  0.29700    
+HeizungHolzpelletheizung  -289.8749   303.4758  -0.955  0.34229    
+HeizungÖl                   92.0784   304.4141   0.302  0.76305    
+HeizungWärmepumpe          196.3236   210.3614   0.933  0.35342    
+HeizungZentralheizung     -171.7000   125.3993  -1.369  0.17467    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 273.8 on 82 degrees of freedom
+Multiple R-squared:  0.8764,    Adjusted R-squared:  0.8538 
+F-statistic: 38.78 on 15 and 82 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Zu sehen ist, dass wir unter dem Miteinbeziehen aller Informationen, die zur Verfügung stehen, dennoch nur ein Bestimmtheitsmaß von <span class="math inline">R = 0.85</span> erreichen. Das bedeutet, dass trotz aller Daten, die Variation der Mietpreise nur zu ca. <span class="math inline">85\%</span> erklärt werden kann, was entsprechend <span class="math inline">15\%</span> unerklärt lässt.</p>
+<p>Wie bereits in der vorherigen linearen Regression zu sehen war, hat sowohl der Ort als auch die Wohnfläche einen starken Einfluss auf den Wohnpreis. Beide Attribute sind unter einem Signifikanzniveau von <span class="math inline">\alpha = 0.001</span> statistisch signifkant. Dass der Ort und die Größe der Wohnung einen erheblichen Einfluss auf den Mietpreis nehmen, ist nicht weiter überraschend. Unter dem gleichen Signifikanzniveau statistisch signifikant ist ebenso die Etage, in der die Wohnung liegt. Wir sehen hier im Mittel einen Anstieg des Mietpreises um ca. <span class="math inline">23,00€</span> pro Etage. Begründen lässt sich dies eventuell durch die bessere Aussicht in den oberen Etagen und die Wahrscheinlichkeiten auf Wohnungstypen wie Penthäuser gesteigert ist.</p>
+<p>Unter einem Signifikanzniveau von <span class="math inline">\alpha = 0.05</span> statistisch relevant ist sowohl das Vorhandensein eines Parkplatzes als auch das Baujahr. Ist kein Parkplatz vorhanden, so ist der Mietpreis im Mittel ca. <span class="math inline">150,00€</span> billiger. Da Parkplätze insbesondere in Großstädten, aufgrund der wenigen Parkmöglichkeiten, eine wichtige Rolle spielen ist verständlich. Mit dem Baujahr steigt der Mietpreis im Mittel um ca. <span class="math inline">2,00€</span>. Neuere Immobilien kommen in der Regel mit effizienteren Bauweisen, geringen Energieverbräuchen und modernerem Aussehen und benötigen zumeist geringe Wartungsarbeiten. Daher überrascht es nicht weiter, dass das Baujahr einen Einfluss auf den Mietpreis nimmt.</p>
+<p>Anhand der einzelnen P-Werte für die jeweiligen Attribute der Wohnungen können wir außerdem ablesen, welche der Informationen für die Modellierung des Mietpreises nicht signifikant ist. Dazu zählt zunächst die Art der Heizung, von welcher keiner der aufgelisteten Merkmalsausprägungen im Bereich des Signifikanzniveaus liegt. Dass die Art der Heizung einen Einfluss auf den Mietpreis besitzt, kann durch die uns zur Verfügung stehenden Daten also nicht bestätigt werden.</p>
+<p>Ebenso zeigen die Daten keinen statistisch signifikanten Zusammenhang zwischen der Anzahl der Zimmer und den Mietpreisen. Eine mögliche Begründung ist, dass weniger die Aufteilung der Wohnung in <span class="math inline">n</span> verschiedene Zimmer, sondern die Größe der Wohnfläche für den Mietpreis relevant ist. Beispielsweise kann sowohl eine besonders große Wohnung als auch eine kleinere Wohnung aus insgesamt drei Zimmern bestehen. Der Mietpreis wird bei der größeren Wohnung dennoch tendenziell größer sein, wie die Daten bestätigen, da die Anzahl der Zimmer nichts über die Größe der Wohnung aussagt.</p>
+<p>Auch für das Vorhandensein eines Balkons lässt sich kein Einfluss auf den Mietpreis feststellen. Mit einem P-Wert von <span class="math inline">p = 0.68</span> ist hier jegliches Signifikanzniveau überschritten. Begründet kann dies dadurch sein, dass keine weiteren Informationen zu dem jeweiligen Balkon gegeben ist. Wichtig könnte eventuell die Größe des Balkons, die Aussicht oder weitere Faktoren sein, die hier nicht näher spezifiziert sind.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(km.lm3)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                 2.5 %      97.5 %
+(Intercept)              -6763.8212789 -476.919434
+Wohnflaeche                 14.1777598   19.670888
+OrtLeipzig                -606.0396286 -326.629395
+Parkplatznein             -287.4509890  -10.666461
+Balkonnein                -108.9433026  166.119836
+Baujahr                      0.4971043    3.574731
+Etage                        9.9204314   36.694648
+Zimmer                    -165.4778752   22.147140
+HeizungEtagenheizung      -477.9291640  485.859142
+HeizungFernwärme          -435.6513022   83.251224
+HeizungFußbodenheizung    -272.4485677  231.208469
+HeizungGasheizung         -157.8522989  510.443644
+HeizungHolzpelletheizung  -893.5848651  313.835146
+HeizungÖl                 -513.4982048  697.654927
+HeizungWärmepumpe         -222.1521718  614.799343
+HeizungZentralheizung     -421.1590358   77.759091</code></pre>
+</div>
+</div>
+<p>Betrachten wir Abschließend die Konfidenzintervalle, so lässt sich sagen, dass die Quadratmeteranzahl zu 95% eine Auswirkung zwischen <span class="math inline">14,18€</span> und <span class="math inline">19,67€</span> pro auf den Mietpreis in der Population hat. Der Unterschied zwischen Frankfurt und Leipzig liegt mit gleicher Wahrscheinlichkeit im Intervall von <span class="math inline">-606,04€</span> und <span class="math inline">-326,63€</span>.</p>
+</section>
+</section>
 </section>
 <section id="zusammenfassung" class="level1">
 <h1>Zusammenfassung</h1>

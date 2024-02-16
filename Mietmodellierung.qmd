@@ -64,9 +64,9 @@ Zum Abschluss werden die Ergebnisse in der Zusammenfassung aufgearbeitet und pr�
 
 # Datenerhebung
 
-Die Datenerhebung fand ausschließlich über den Online-Marktplatz für Wohnungen und Häuser _[ImmobilienScout24](https://www.immobilienscout24.de/)_ statt. Die untersuchten Objekte wurden dabei auf den Immobilientyp _Wohnung_ beschränkt, was als Suchkriterium in der Suchleiste des Portals eingestellt werden kann. Weitere Suchkriterien haben sich auf den _Ort_, in diesem Fall Frankfurt am Main und Leipzig, und auf den Objekttyp, hier _Mieten_, beschränkt. Weitere Kriterien wie _Anzahl der Zimmer_, _Fläche_ oder einem _maximalen Preis_ wurden auf den Standardeinstellungen belassen. Anschließend wurden je Ort der Reihe nach bis zu 45 Objekte in der von ImmobilienScout24 generierten Reihenfolge überpüft und in eine Excel-Datei aufgenommen, die im Folgendem als Basis für die Auswertung dient.
+Die Datenerhebung fand ausschließlich über den Online-Marktplatz für Wohnungen und Häuser _[ImmobilienScout24](https://www.immobilienscout24.de/)_ statt. Die untersuchten Objekte wurden dabei auf den Immobilientyp _Wohnung_ beschränkt, was als Suchkriterium in der Suchleiste des Portals eingestellt werden kann. Weitere Suchkriterien haben sich auf den _Ort_, in diesem Fall Frankfurt am Main und Leipzig, und auf den Objekttyp, hier _Mieten_, beschränkt. Weitere Kriterien wie _Anzahl der Zimmer_, _Fläche_ oder einem _maximalen Preis_ wurden auf den Standardeinstellungen belassen. Anschließend wurden je Ort der Reihe nach bis zu 45 Objekte in der von ImmobilienScout24 generierten Reihenfolge überpüft und in eine Excel-Datei aufgenommen, die im Folgenden als Basis für die Auswertung dienen.
 
-Aufgenommen in die Datenbasis wurden dabei die folgenden Variablen: der _Ort_, die _Kaltmiete_ in Euro, die _Wohnfläche_ in Quadratmetern, das Angebot eines _Parkplatz_, die _Etage_, Anzahl der _Zimmer_, Vorhandensein eines _Balkon_, das _Baujahr_ des Objektes, sowie der entsprechende Link zur Anzeige und dessen Abrufdatum.
+Aufgenommen in die Datenbasis wurden dabei die folgenden Variablen: der _Ort_, die _Kaltmiete_ in Euro, die _Wohnfläche_ in Quadratmetern, das Angebot eines _Parkplatz_, die _Etage_, Anzahl der _Zimmer_, Vorhandensein eines _Balkon_, das _Baujahr_ des Objektes sowie der entsprechende Link zur Anzeige und dessen Abrufdatum.
 
 Für die nachfolgenden Auswertungen und Analysen lesen wir zunächst die Excel-Datei ein:
 
@@ -103,7 +103,7 @@ miete_lpz <- subset(mieten, Ort == "Leipzig")
 Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie `Heizung` oder `Zimmer`, als auch metrische verhältnisskalierte Variablen wie `Kaltmiete` oder `Wohnflaeche` auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können.
 Um nicht nur den Gesamtpreis der Kaltmiete zu betrachten, wird der Quadratmeterpreis mit in den Datensatz aufgenommen:
 
-````{r}
+```{r}
 mieten <- mieten |>
   mutate(ppqm = Kaltmiete / Wohnflaeche)
 ```
@@ -199,7 +199,9 @@ Schlecht bis gar nicht beschreibbar/interpretierbar
 
 Aus den zahlreichen Diagrammen des vorherigen Abschnitts der explorativen Datenanalyse konnten sich bereits diverse Zusammenhänge erkennen lassen. Dieser letzte Teil der Untersuchung der gegebenen Daten beschäftigt sich abschließend mit der Modellierung der Kaltmiete unter Verwendung der zur Verfügung stehenden Variablen wie der Wohnfläche, der Art der Heizung oder dem Vorhandensein eines Balkons. Ziel ist hierbei die Erstellung eines Modells, durch das die Variable `Kaltmiete` bestmöglich erklärt werden kann.
 
-Das ersten Diagramm der explorativen Datenanalyse, in dem die `Kaltmiete` der Inserate zusammen mit deren `Wohnfläche` im Streudiagramm dargestellt wurden, lässt einen positiven Zusammenhang der `Kaltmiete` zur `Wohnfläche` vermuten. In einem ersten einfachen Modell, mit dem dieser Zusammenhang modelliert werden soll, kann aus den Daten beispielsweise der Durchschnitt des Quadratmeterpreises berechnet werden.
+## Modellierung über Durchschnittsquadratmeterpreis
+
+Das erste Diagramm der explorativen Datenanalyse, in dem die `Kaltmiete` der Inserate zusammen mit deren `Wohnfläche` im Streudiagramm dargestellt wurden, lässt einen positiven Zusammenhang der `Kaltmiete` zur `Wohnfläche` vermuten. In einem ersten einfachen Modell, mit dem dieser Zusammenhang modelliert werden soll, kann aus den Daten beispielsweise der Durchschnitt des Quadratmeterpreises berechnet werden.
 
 ```{r}
 sum_wohnflaeche <- sum(~ Wohnflaeche, data = mieten)
@@ -207,7 +209,7 @@ sum_kaltmiete <- sum(~ Kaltmiete, data = mieten)
 price_per_squaremeter <- sum_kaltmiete / sum_wohnflaeche
 ```
 
-Damit ergibt sich ersten einfaches Modell für die `Kaltmiete` unter Verwendung der `Wohnfläche` als unabhängige Variable folgende Gleichung:
+Damit ergibt sich als ersten einfaches Modell für die `Kaltmiete` unter Verwendung der `Wohnfläche` als unabhängige Variable folgende Gleichung:
 
 $$ Kaltmiete = Wohnfläche \cdot `r round(price_per_squaremeter, digits = 2)` € $$
 Wir betrachten das Modell, indem die berechnete Gerade in das Streudiagramm der explorativen Datenanalyse eingezeichnet wird:
@@ -215,7 +217,11 @@ Wir betrachten das Modell, indem die berechnete Gerade in das Streudiagramm der 
 ```{r}
 pps_x = c(0, 200)
 pps_y = c(0, price_per_squaremeter * 200)
-gf_line(pps_y ~ pps_x, color = "red") |> gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Ort)
+gf_line(pps_y ~ pps_x, color = "blue") |> 
+  gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Ort) |> 
+  gf_labs(x = "Wohnfläche in Quadratmeter", 
+          y = "Mietpreis in Euro", 
+          title = "Modellierung über Durchschnittspreis")
 ```
 
 Dazu kann noch der Korrelationskoeffizient bestimmt werden.
@@ -224,44 +230,96 @@ Dazu kann noch der Korrelationskoeffizient bestimmt werden.
 cor_miete_flaeche = cor(Wohnflaeche ~ Kaltmiete, data = mieten)
 ```
 
-Dabei wird festgestellt, dass die `Kaltmiete` zu `r cor_miete_flaeche`% mit der Wohnfläche korreliert. Das Modell kann demnach bereits für einen groben Richtwert verwendet werden. Ziel ist jedoch eine noch genauere Modellierung der Kaltmiete unter Berücksichtigung der weiteren Daten.
+Dabei wird festgestellt, dass die `Kaltmiete` zu `r round(cor_miete_flaeche * 100, digits=2)`% mit der Wohnfläche korreliert. Das Modell kann demnach bereits für einen groben Richtwert verwendet werden. Ziel ist jedoch eine noch genauere Modellierung der Kaltmiete unter Berücksichtigung der weiteren Daten.
 
-Um die weiteren Variablen miteinzubeziehen, verwenden wir die lineare Regression, die mit der `lm()`-Funktion auf die Daten angewendet werden kann. Wir starten zunächst erneut mit der `Kaltmiete` und der `Wohnflaeche`.
+## Modellierung über die lineare Regression
+
+Um die weiteren Variablen miteinzubeziehen, verwenden wir die lineare Regression, die mit der `lm()`-Funktion auf die Daten angewendet werden kann.
+
+### Wohnflaeche
+
+Wir starten zunächst erneut mit der `Kaltmiete` und der jeweils dazugehörigen `Wohnflaeche`.
 
 ```{r}
 km.lm1 <- lm(Kaltmiete ~ Wohnflaeche, data = mieten)
 summary(km.lm1)
 ```
 
-Mit einem Bestimmtheitsmaß von $R^2 ~ 0.56$, haben wir mit der linearen Regression allein unter Verwendung der `Wonflaeche` noch kein gutes Modell erzeugt.
+Mit einem Bestimmtheitsmaß von $R^2 = 0.55$, haben wir mit der linearen Regression allein unter Verwendung der `Wonflaeche` noch kein gutes Modell erzeugt.
 
-Da zu Beginn der explorativen Datenanalyse festgestellt wurde, dass die Kaltmieten zwischen den beiden Orten Frankfurt am Main und Leipzig unter sonst gleichen Bedingungen unterscheidet, soll diese zuerst in die Modellierung miteinbezogen werden.
+### Ort 
+
+Da zu Beginn der explorativen Datenanalyse festgestellt wurde, dass sich die Kaltmieten zwischen den beiden Orten Frankfurt am Main und Leipzig unter sonst gleichen Bedingungen bereits stark unterscheidet, soll diese zuerst in die Modellierung miteinbezogen werden.
 
 ```{r}
 km.lm2 <- lm(Kaltmiete ~ Wohnflaeche + Ort, data = mieten)
 summary(km.lm2)
 ```
 
-Durch das Miteinbeziehen des Ortes steigert sich das Bestimmtheitsmaß bereits auf $R^2 ~ 0.78$. An der Zusammenfassung der Ergebnisse lässt sich außerdem ablesen, dass in Leipzig die Kaltmiete im Schnitt 655,13€ billiger als in Leipzig ist. Das Modell lässt sich nun wie folgt darstellen:
-
-$$ Kaltmiete = 261.03 + Wohnflaeche \cdot 16.57 + \beta1 \cdot -655.13 $$
-
-
-
-# Rest
-
-Modellieren Sie in diesem Abschnitt die Miete und interpretieren Sie Ihr Ergebnis. 
-
-Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umfang von ca. 0,5--1 Seiten haben, bei Gruppenarbeiten einen von ca. 1--2 Seiten.
-
-Modell schätzen:
-
 ```{r}
-# Modell_Mieten <- lm(Kaltmiete ~ 1, data = mieten)
-# summary(Modell_Mieten)
+km.lm2.coef <- coef(km.lm2)
+print(km.lm2.coef)
 ```
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+it dem Miteinbeziehen der Indekatorvariable $x2$ beziehungsweise der kategorialen Variable des Ortes erhalten wir ein Bestimmtheitsmaß von $R^2 = 0.77$. Die Variation des Mietpreises kann also zu $78$% durch den Mietpreis und dem Ort erklärt werden. An der Zusammenfassung der Ergebnisse lässt sich außerdem ablesen, dass in Leipzig die Kaltmiete im Mittelwert 655,13€ billiger als in Leipzig ist. Das Modell lässt sich nun wie folgt darstellen:
+
+$$ 
+\hat{y}_i = 
+`r round(km.lm2.coef[1], digits=2)` 
++ x1_i \cdot 
+`r round(km.lm2.coef[2], digits=2)`
+`r round(km.lm2.coef[3], digits=2)` \cdot 
+\begin{cases} 
+\text{1}: & \text{ $x2_i = Leipzig$}\\
+\text{0}: & \text{ $x2_i = Frankfurt$}
+\end{cases} 
+$$
+
+Wobei $x1_i$ die `Wohnflaeche` und $x2_i$ entsprechend den `Wohnort` darstellt.
+
+Entsprechend dem berechneten P-Wert von $3.68 \cdot 10^(-16)$ kann das Ergebnis in Bezug auf den Wohnort unter Verwendung eines Signifikanzniveaus von $5\%$ als statistisch signifikant bezeichnet werden. Die $H_0$-Hypothese $\mu_{Frankfurt} = \mu_{Leipzig}$ kann somit verworfen werden.
+
+Grafisch erhalten wir dadurch die zwei Geraden, abhängig des Ortes:
+
+```{r}
+frankfurt.x = c(0, 200)
+frankfurt.y = c(km.lm2.coef[1] + km.lm2.coef[2] * 0 + km.lm2.coef[3] * 0, km.lm2.coef[1] + km.lm2.coef[2] * 200 + km.lm2.coef[3] * 0 )
+leipzig.x = c(0, 200)
+leipzig.y = c(km.lm2.coef[1] + km.lm2.coef[2] * 0 + km.lm2.coef[3] * 1, km.lm2.coef[1] + km.lm2.coef[2] * 200 + km.lm2.coef[3] * 1 )
+pps_y = c(0, price_per_squaremeter * 200)
+gf_line(frankfurt.y ~ frankfurt.x, color = "orange") |> 
+  gf_line(leipzig.y ~ leipzig.x, color = "lightblue") |>
+  gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Ort)
+```
+
+Sowohl grafisch als auch am Bestimmtheitsmaß ist bereits sichtbar, dass die Modellierung über die Größe der Immobilien zusammen mit dem jeweiligen Ort einen großen Teil des Mietpreises erklären kann.
+
+### Weitere Variablen
+
+Zuletzt werden die weiteren Variablen in die lineare Regression miteinbezogen und das daraus entstehende Modell betrachtet und interpretiert. Wir verwenden nun zusätzlich die Informationen bezüglich des `Parkplatzes`, der Anzahl der Zimmer, des `Baujahres`, das Vorhandensein eines Balkons und der `Etage`.
+
+```{r}
+km.lm3 <- lm(Kaltmiete ~ Wohnflaeche + Ort + Parkplatz + Balkon + Baujahr + Etage + Zimmer + Heizung, data = mieten)
+summary(km.lm3)
+```
+
+Zu sehen ist, dass wir unter dem Miteinbeziehen aller Informationen, die zur Verfügung stehen, dennoch nur ein Bestimmtheitsmaß von $R = 0.85$ erreichen. Das bedeutet, dass trotz aller Daten, die Variation der Mietpreise nur zu ca. $85\%$ erklärt werden kann, was entsprechend $15\%$ unerklärt lässt.
+
+Wie bereits in der vorherigen linearen Regression zu sehen war, hat sowohl der Ort als auch die Wohnfläche einen starken Einfluss auf den Wohnpreis. Beide Attribute sind unter einem Signifikanzniveau von $\alpha = 0.001$ statistisch signifkant. Dass der Ort und die Größe der Wohnung einen erheblichen Einfluss auf den Mietpreis nehmen, ist nicht weiter überraschend. Unter dem gleichen Signifikanzniveau statistisch signifikant ist ebenso die Etage, in der die Wohnung liegt. Wir sehen hier im Mittel einen Anstieg des Mietpreises um ca. $23,00€$ pro Etage. Begründen lässt sich dies eventuell durch die bessere Aussicht in den oberen Etagen und die Wahrscheinlichkeiten auf Wohnungstypen wie Penthäuser gesteigert ist.
+
+Unter einem Signifikanzniveau von $\alpha = 0.05$ statistisch relevant ist sowohl das Vorhandensein eines Parkplatzes als auch das Baujahr. Ist kein Parkplatz vorhanden, so ist der Mietpreis im Mittel ca. $150,00€$ billiger. Da Parkplätze insbesondere in Großstädten, aufgrund der wenigen Parkmöglichkeiten, eine wichtige Rolle spielen ist verständlich. Mit dem Baujahr steigt der Mietpreis im Mittel um ca. $2,00€$. Neuere Immobilien kommen in der Regel mit effizienteren Bauweisen, geringen Energieverbräuchen und modernerem Aussehen und benötigen zumeist geringe Wartungsarbeiten. Daher überrascht es nicht weiter, dass das Baujahr einen Einfluss auf den Mietpreis nimmt.
+
+Anhand der einzelnen P-Werte für die jeweiligen Attribute der Wohnungen können wir außerdem ablesen, welche der Informationen für die Modellierung des Mietpreises nicht signifikant ist. Dazu zählt zunächst die Art der Heizung, von welcher keiner der aufgelisteten Merkmalsausprägungen im Bereich des Signifikanzniveaus liegt. Dass die Art der Heizung einen Einfluss auf den Mietpreis besitzt, kann durch die uns zur Verfügung stehenden Daten also nicht bestätigt werden.
+
+Ebenso zeigen die Daten keinen statistisch signifikanten Zusammenhang zwischen der Anzahl der Zimmer und den Mietpreisen. Eine mögliche Begründung ist, dass weniger die Aufteilung der Wohnung in $n$ verschiedene Zimmer, sondern die Größe der Wohnfläche für den Mietpreis relevant ist. Beispielsweise kann sowohl eine besonders große Wohnung als auch eine kleinere Wohnung aus insgesamt drei Zimmern bestehen. Der Mietpreis wird bei der größeren Wohnung dennoch tendenziell größer sein, wie die Daten bestätigen, da die Anzahl der Zimmer nichts über die Größe der Wohnung aussagt.
+
+Auch für das Vorhandensein eines Balkons lässt sich kein Einfluss auf den Mietpreis feststellen. Mit einem P-Wert von $p = 0.68$ ist hier jegliches Signifikanzniveau überschritten. Begründet kann dies dadurch sein, dass keine weiteren Informationen zu dem jeweiligen Balkon gegeben ist. Wichtig könnte eventuell die Größe des Balkons, die Aussicht oder weitere Faktoren sein, die hier nicht näher spezifiziert sind.
+
+```{r}
+confint(km.lm3)
+```
+
+Betrachten wir Abschließend die Konfidenzintervalle, so lässt sich sagen, dass die Quadratmeteranzahl zu 95% eine Auswirkung zwischen $14,18€$ und $19,67€$ pro auf den Mietpreis in der Population hat. Der Unterschied zwischen Frankfurt und Leipzig liegt mit gleicher Wahrscheinlichkeit im Intervall von $-606,04€$ und $-326,63€$.
 
 # Zusammenfassung
 
