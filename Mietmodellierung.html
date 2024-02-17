@@ -143,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">16. Februar 2024</p>
+      <p class="date">17. Februar 2024</p>
     </div>
   </div>
   
@@ -344,7 +344,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(Ort <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(ppqm <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(Ort <span class="sc">~</span> Parkplatz, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Parkplatz
 Ort         ja nein
@@ -352,20 +356,21 @@ Ort         ja nein
   Leipzig   17   31</code></pre>
 </div>
 </div>
-<p>Klare Tendenz in beiden Städten Wohnungen mit Parkplatz sind im Schnitt teurer ? Parkplatz in der Kaltmiete enthalten? ? Eventuell teurere Wohnung hat eher eine Tiefgarage oder einen sonstigen Stellplatz auf dem Grundstück?</p>
+<p>In beiden Boxplots ist zu sehen, dass sowohl der Gesamtpreis der Kaltmiete als auch der Quadrameterpreis höher ist, wenn eine Wohnung einen Parkplatz bietet.<br>
+Der Unterschied grundsätzliche Unterschied bei den Mietpreisen zwischen den Städten ist hier sowohl bei Wohnnungsangeboten mit als auch ohne Parkplatz zu erkennen. So zeigt das Boxplot einen eine wesentlich höhere Preisspanne in Frankfurt bei Woihnungen ohne Parkplatz besonders aber bei Wonhnungen mit Parkplatz. Im vorliegende Datensatz ist die Verteilung der Wonhungen mit oder ohne Parkplatz in Frankfurt relativ gleich verteilt (26:24) in Leipzig sind es jedoch etwas mehr Wohungen ohne Parkplatz (17:31).</p>
 </section>
 <section id="balkon" class="level2">
 <h2 class="anchored" data-anchor-id="balkon">Balkon</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(ppqm <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(ppqm <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(Ort <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(Ort <span class="sc">~</span> Balkon, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Balkon
 Ort         ja nein
@@ -373,39 +378,35 @@ Ort         ja nein
   Leipzig   29   19</code></pre>
 </div>
 </div>
-<p>Erstes Boxplot zeigt Wohnung mit Balkon sind meist teurer Da der Balkon auch zu 25% in die gesamte Wohnflaeche eingerechnet ist, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Hier ist auch ein Zusammenhang zwischen Balkon “Ja” und einen höheren Kaltmiete zu erkennen. ?Interpretation: Balkon steigert Kaltmiete unabhängig von der Wohnfläche. Interessant wäre zusätzlich eine Analyse, wenn Wohnfläcche um die Fläche des Balkons bereinigt wäre.</p>
+<p>Das erste Boxplot zeigt Wohnung mit Balkon sind meist teurer. Da der Balkon auch zu 25% in die gesamte Wohnflaeche eingerechnet ist, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Hier ist auch ein Zusammenhang zwischen Balkon “Ja” und einen höheren Kaltmiete zu erkennen.</p>
 </section>
 <section id="zimmer" class="level2">
 <h2 class="anchored" data-anchor-id="zimmer">Zimmer</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Wohnflaeche <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Wohnflaeche <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(ppqm <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(ppqm <span class="sc">~</span> Zimmer, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-14-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Insgesamt ist zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. Der Quadratmeterpreis ist bei mehr Zimmern nicht höher.</p>
+<p>Das erste Streudiagram zeigt, bei mehr Zimmern ist die Kaltmietehöher.Da die Vermutung naheliegt, dass oft mehr Zimmer mehr Wohnfläche bedeuten kann, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat ein Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine mit 2 Zimmern. Wobei bei einzelnen Wohnungen ausreißer zu erkenn sind, was auf sehr große oder eher kleine Räume schließen lässt. Bei Wohnung mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings leiegen hier auch keim Angebote vor. Um die nun auch noch den Mieptreis zu bertachten, wurde im dritten Streudiagramm Quadraatmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern größtenteils nicht wesentlich höher. Lediglich in Frankfurt können ein paar Ausreißer erkannt werden.</p>
 </section>
 <section id="etage" class="level2">
 <h2 class="anchored" data-anchor-id="etage">Etage</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Kaltmiete <span class="sc">~</span> Etage, <span class="at">data =</span> mieten)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Continuous x aesthetic
-ℹ did you forget `aes(group = ...)`?</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Kaltmiete <span class="sc">~</span> Etage, <span class="at">data =</span> mieten, <span class="at">color =</span> <span class="sc">~</span> Ort)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Mietmodellierung_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Schlecht bis gar nicht beschreibbar/interpretierbar</p>
+<p>Das Streudiagramm zeigt lediglich, dass die meisten Wohnungen im 0. bis 6. Geschoss sind. Der Mietpreis streut in der Spanne aber bei jeder Etage sehr ähnlich. Wie sich die Etage der Angebotene Wohnung auf den Mietpreis auswirkt, ist daher schlecht interpretierbar. Daher wurde sich entschieden, das Diagram auszublenden und die Etage nicht weiter als Variable in die Modellierung aufzunehmen.</p>
 </section>
 </section>
 <section id="modellierung" class="level1">
