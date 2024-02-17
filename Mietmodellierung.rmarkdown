@@ -1,0 +1,367 @@
+---
+title: "Modellierung der Kaltmiete"
+subtitle: "Vergleich Frankfurt am Main und Leipzig"
+lang: de
+author: "Henrik Popp, Kai Herbst, Manuel Zeh"
+date: "`r Sys.Date()`"
+format: 
+  html:
+    toc: true
+    html-math-method: katex
+  pdf:
+    toc: true
+    number-sections: false
+    colorlinks: true 
+    papersize: a4
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup}
+#| include: false
+library(mosaic)
+library(here)
+library(readxl)
+library(dplyr)
+```
+
+
+
+
+
+# Aufgabenstellung
+
+| Abschnitt               | Aufgabe                                                                              | Reiner Textumfang | Erledigt |
+|-------------------------|--------------------------------------------------------------------------------------|-------------------|----------|
+| Einleitung              | Auf inhaltliche Aufgabenstellung eingehen                                            | 0,5 - 1 Seiten    | [✔]      |
+| Datenerhebung           | Wie wurden die Daten erhoben? (Suchfilter, Sortierung)                               | 1 - 3 Sätze       | [✔]      |
+| Explorative Datenanalyse| Analyse + eventl. Datenvorverarbeitung                                               | 1 - 2 Seiten      | [ ]      |
+| Modellierung            | Modellierung + Interpretation                                                        | 1 - 2 Seiten.     | [ ]      |
+| Zusammenfassung         | Gemeinsam kurz zentrale Ergebnisse zusammenfassen + Auf Grenzen der Analyse eingehen | 0,5 - 1 Seiten.    | [ ]      |
+
+
+* Hier auch noch Literatur recherchieren:
+  * https://de.statista.com/statistik/daten/studie/258635/umfrage/bruttokaltmiete-bewohnter-wohnungen-in-deutschland-nach-bundeslaendern/
+  * https://www.deutschlandatlas.bund.de/DE/Karten/Wie-wir-wohnen/040-Mieten.html#_6a54aw429
+  * https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8053893/
+  * https://de.statista.com/statistik/daten/studie/262508/umfrage/mietpreise-in-frankfurt-am-main/
+  * https://de.statista.com/statistik/daten/studie/1312743/umfrage/mieten-in-leipzig-nach-dem-baualter-der-wohnung/
+  * https://de.statista.com/statistik/daten/studie/535299/umfrage/mietpreise-auf-dem-wohnungsmarkt-in-leipzig/
+  * https://de.statista.com/statistik/daten/studie/1312730/umfrage/entwicklung-der-angebotsmieten-in-leipzig/
+  * https://link.springer.com/chapter/10.1007/978-3-658-11757-3_4
+  * https://www.ifo.de/DocDL/ifoDD_14-06_03-10.pdf
+    
+
+
+
+# Einleitung
+
+In dieser Fallstudie sollen die Kaltmieten der beiden Städte Frankfurt am Main und Leipzig miteinander verglichen und modelliert werden. Ziel ist es, die verschiedenen möglichen Einflussfaktoren auf die Kaltmiete in den jeweiligen Städte zu bestimmen und eine Modellierung der Kaltmiete zu erstellen.
+
+Zu Beginn wird auf die Datenerhebung eingegangen. Hier soll erklärt werden, woher die verarbeiteten Daten stammen und unter welchen Bedingungen die Daten erhoben wurden. Mit der explorativen Datenanalyse sollen dann die erhobenen Daten beschrieben und veranschaulicht werden. Hierbei wird die Vorverarbeitung der Daten beschrieben, im Anschluss wird mithilfe von Grafiken und dazugehörigen Interpretationen eine Datenanalyse erstellt. Dabei soll unter anderem herausgefunden werden, welche erhobenen Variablen den größten Einfluss auf die Kaltmiete einer Stadt haben oder wie hoch die eventuellen Unterschiede der Mieten in den beiden Städten sind.
+Den zentralen Teil des Dokuments stellt die Modellierung dar. Hier soll die Kaltmiete modelliert, also durch ein selbsterstelltes statistisches Modell dargestellt werden. Zudem wird das Modell interpretiert.
+Zum Abschluss werden die Ergebnisse in der Zusammenfassung aufgearbeitet und präsentiert.
+
+
+# Datenerhebung
+
+Die Datenerhebung fand ausschließlich über den Online-Marktplatz für Wohnungen und Häuser _[ImmobilienScout24](https://www.immobilienscout24.de/)_ statt. Die untersuchten Objekte wurden dabei auf den Immobilientyp _Wohnung_ beschränkt, was als Suchkriterium in der Suchleiste des Portals eingestellt werden kann. Weitere Suchkriterien haben sich auf den _Ort_, in diesem Fall Frankfurt am Main und Leipzig, und auf den Objekttyp, hier _Mieten_, beschränkt. Weitere Kriterien wie _Anzahl der Zimmer_, _Fläche_ oder einem _maximalen Preis_ wurden auf den Standardeinstellungen belassen. Anschließend wurden je Ort der Reihe nach bis zu 45 Objekte in der von ImmobilienScout24 generierten Reihenfolge überpüft und in eine Excel-Datei aufgenommen, die im Folgendem als Basis für die Auswertung dient.
+
+Aufgenommen in die Datenbasis wurden dabei die folgenden Variablen: der _Ort_, die _Kaltmiete_ in Euro, die _Wohnfläche_ in Quadratmetern, das Angebot eines _Parkplatz_, die _Etage_, Anzahl der _Zimmer_, Vorhandensein eines _Balkon_, das _Baujahr_ des Objektes, sowie der entsprechende Link zur Anzeige und dessen Abrufdatum.
+
+Für die nachfolgenden Auswertungen und Analysen lesen wir zunächst die Excel-Datei ein:
+
+
+
+```{r}
+# Pfad zur Excel-Datei erstellen
+pfad_mieten <- here("Mieten.xlsx")
+# Daten einlesen
+mieten <- read_excel(pfad_mieten)
+```
+
+```{r, echo = FALSE}
+# Datenstruktur
+# str(mieten)
+```
+
+
+
+Über die Ausgabe der ersten sechs Eintrage erhalten wir einen Einblick in die Daten:
+
+
+
+```{r}
+# Obere 6 Beobachtungen
+head(mieten)
+```
+
+
+
+
+# Explorative Datenanalyse
+Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit `str(mieten)` die Struktur des Datensatzes angezeigt werden.
+
+
+
+Einschub (kann noch wo anders platziert werden): 
+Um nicht nur den Gesamtpreis der Kaltmiete zu betrachten wird der Quadratmeterpreis in den Datensatz mit aufgenommen:
+
+
+
+````{r}
+mieten <- mieten |>
+  mutate(ppqm = Kaltmiete / Wohnflaeche)
+
+```
+
+```{r}
+str(mieten)
+miete_ffm <- subset(mieten, Ort == "Frankfurt")
+miete_lpz <- subset(mieten, Ort == "Leipzig")
+```
+
+
+
+Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie `Heizung` oder `Zimmer`, als auch metrische verhältnisskalierte Variablen wie `Kaltmiete` oder `Wohnflaeche` auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können.
+
+Zuerst soll auf den Zusammenhang von `Kaltmiete` und `Wohnflaeche` geschaut werden, bei zwei metrisch verhältnisskalierten Variablen bietet sich dafür ein Scatterplot an.
+
+
+
+
+```{r}
+gf_point(Kaltmiete ~ Wohnflaeche, data = mieten)
+```
+
+
+
+Grundsätzlich lässt sich ein positiver Zusammenhang zwischen `Kaltmiete` und `Wohnflaeche` erkennen, wobei die Streuung der Kaltmiete mit zunehmender Wohnfläche zunimmt.
+
+Nun muss dieses Diagramm jedoch um die Information des Ortes erweitert werden, um eine genauere Aussage treffen zu können. Dafür wird der Code um den Zusatz `color = ~ Ort` erweitert:
+
+
+
+```{r}
+gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Ort)
+```
+
+
+
+Hier lässt sich nun erkennen, dass die erfassten Mieten im Datensatz in Frankfurt tendenziell höher sind, als in Leipzig. Bei vergleichbarer Wohnfläche liegen die gefärbten Punkte für Frankfurt stets über den Punkten von Leipzig. Um den Eindruck der Mietunterschiede zu festigen, kann ein Boxplot verwendet werden.
+
+
+
+```{r}
+gf_boxplot(Kaltmiete ~ Ort, data = mieten)
+```
+
+
+
+Das Boxplot zeigt, dass der Median für die Kaltmiete in Frankfurt deutlich über dem Median von Leipzig liegt. Zudem ist der 1,5-fache Interquartilsabstand bei Frankfurt größer als bei Leipzig, und die Whisker sind bei Frankfurt ebenfalls länger. Für Leipzig gibt es jedoch mehr Ausreißer, nämlich 4, verglichen mit den 2 Ausreißern von Frankfurt.
+
+Es sollen nun auch die weiteren Variablen untersucht werden, angefangen mit der Variablen `Heizung`. Um die verschiedenen Ausprägungen zu vergleichen und ihre absolute Häufigkeit darzustellen, eignet sich ein Säulendiagramm:
+
+
+```{r}
+# gf_boxplot(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
+# gf_point(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
+gf_bar( ~ Heizung, data = mieten, fill = ~ Ort, position = position_dodge()) + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+
+Das Säulendiagramm zeigt, dass die Fußbodenheizung in Frankfurt am weitesten verbreitet ist, gefolgt von der Zentralheizung und der Fernwärme. In Leipzig sind Gas-Heizung und Zentralheizung gleich häufig vertreten, gefolgt von der Fernwärme. In einigen Beobachtungen und häufiger in Leipzig als in Frankfurt, wurde der Heizungstyp nicht angegeben.
+
+Bei der Variablen `Baujahr` handelt es sich hier um eine diskrete Variable. Aufgrund der Vielzahl an Jahren im Datensatz eignet sich jedoch die Verwendung des tatsächlichen Baujahres nicht, da die Darstellungen sonst sehr unübersichtlich werden. Stattdessen soll eine Klassifizierung in "alt - mittel - neu" vorgenommen werden, um die Baujahre zusammenzufassen.
+
+
+
+```{r}
+mieten <- mieten %>%
+  mutate(Baujahrgruppe = case_when(
+    is.na(Baujahr) ~ "NA",
+    as.integer(Baujahr) < 1970 ~ "alt",
+    between(as.integer(Baujahr), 1970, 2000) ~ "mittel",
+    TRUE ~ "neu"
+  ))
+
+gf_bar( ~ Baujahrgruppe, data = mieten, fill = ~ Ort, position = position_dodge())
+```
+
+
+
+Im Säulendiagramm ist erkennbar, dass die meisten Beobachtungen in Frankfurt in die Kategorie "neu" (Baujahr > 2000) fallen, gefolgt von "alt" (Baujahr < 1970) und "mittel". In Leipzig dominieren die Beobachtungen mit "alt", dann kommen "neue" Baujahre. Es treten in beiden Städten nur wenige Beobachtungen mit Baujahren zwischen 1970 und 2000 auf, in Leipzig wurde das Baujahr häufiger nicht angegeben.
+
+
+
+```{r}
+gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Heizung)
+gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Baujahrgruppe)
+# gf_boxplot(Kaltmiete ~ Einbaukueche, data = mieten, color = ~ Ort)
+gf_boxplot(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort)
+gf_histogram(~ Kaltmiete, data = mieten, col = ~ Ort, fill = ~ Ort)
+
+mean(~ Kaltmiete, data = miete_ffm)
+mean(~ Kaltmiete, data = miete_lpz)
+```
+
+
+
+#Parkplatz
+
+
+```{r}
+gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten, color = ~ Ort)
+tally(Ort ~ Parkplatz, data = mieten)
+```
+
+
+Klare Tendenz in beiden Städten
+Wohnungen mit Parkplatz sind im Schnitt teurer
+? Parkplatz in der Kaltmiete enthalten?
+? Eventuell teurere Wohnung hat eher eine Tiefgarage oder einen sonstigen Stellplatz auf dem Grundstück?
+
+#Balkon
+
+
+```{r}
+gf_boxplot(Kaltmiete ~ Balkon, data = mieten, color = ~ Ort)
+gf_boxplot(ppqm ~ Balkon, data = mieten, color = ~ Ort)
+tally(Ort ~ Balkon, data = mieten)
+```
+
+
+
+Erstes Boxplot zeigt Wohnung mit Balkon sind meist teurer
+Da der Balkon auch zu 25% in die gesamte Wohnflaeche eingerechnet ist, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Hier ist auch ein Zusammenhang zwischen Balkon "Ja" und einen höheren Kaltmiete zu erkennen. 
+?Interpretation: Balkon steigert Kaltmiete unabhängig von der Wohnfläche. Interessant wäre zusätzlich eine Analyse, wenn Wohnfläcche um die Fläche des Balkons bereinigt wäre. 
+
+#Zimmer
+
+
+```{r}
+gf_point(Kaltmiete ~ Zimmer, data = mieten, color = ~ Ort)
+gf_point(Wohnflaeche ~ Zimmer, data = mieten, color = ~ Ort)
+gf_point(ppqm ~ Zimmer, data = mieten, color = ~ Ort)
+```
+
+
+Insgesamt ist zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. Der Quadratmeterpreis ist bei mehr Zimmern nicht höher. 
+
+
+#Etage
+
+
+```{r}
+gf_boxplot(Kaltmiete ~ Etage, data = mieten)
+```
+
+
+Schlecht bis gar nicht beschreibbar/interpretierbar
+
+
+# Modellierung
+
+Aus den zahlreichen Diagrammen des vorherigen Abschnitts der explorativen Datenanalyse konnten sich bereits diverse Zusammenhänge erkennen lassen. Dieser letzte Teil der Untersuchung der gegebenen Daten beschäftigt sich abschließend mit der Modellierung der Kaltmiete unter Verwendung der zur Verfügung stehenden Variablen wie der Wohnfläche, der Art der Heizung oder dem Vorhandensein eines Balkons. Ziel ist hierbei die Erstellung eines Modells, durch das die Variable `Kaltmiete` bestmöglich erklärt werden kann.
+
+Das ersten Diagramm der explorativen Datenanalyse, in dem die `Kaltmiete` der Inserate zusammen mit deren `Wohnfläche` im Streudiagramm dargestellt wurden, lässt einen positiven Zusammenhang der `Kaltmiete` zur `Wohnfläche` vermuten. In einem ersten einfachen Modell, mit dem dieser Zusammenhang modelliert werden soll, kann aus den Daten beispielsweise der Durchschnitt des Quadratmeterpreises berechnet werden.
+
+
+
+```{r}
+sum_wohnflaeche <- sum(~ Wohnflaeche, data = mieten)
+sum_kaltmiete <- sum(~ Kaltmiete, data = mieten)
+price_per_squaremeter <- sum_kaltmiete / sum_wohnflaeche
+```
+
+
+
+Damit ergibt sich ersten einfaches Modell für die `Kaltmiete` unter Verwendung der `Wohnfläche` als unabhängige Variable folgende Gleichung:
+
+$$ Kaltmiete = Wohnfläche \cdot `r round(price_per_squaremeter, digits = 2)` € $$
+Wir betrachten das Modell, indem die berechnete Gerade in das Streudiagramm der explorativen Datenanalyse eingezeichnet wird:
+
+
+
+```{r}
+pps_x = c(0, 200)
+pps_y = c(0, price_per_squaremeter * 200)
+gf_line(pps_y ~ pps_x, color = "red") |> gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Ort)
+```
+
+
+
+Dazu kann noch der Korrelationskoeffizient bestimmt werden.
+
+
+
+```{r}
+cor_miete_flaeche = cor(Wohnflaeche ~ Kaltmiete, data = mieten)
+```
+
+
+
+Dabei wird festgestellt, dass die `Kaltmiete` zu `r cor_miete_flaeche`% mit der Wohnfläche korreliert. Das Modell kann demnach bereits für einen groben Richtwert verwendet werden. Ziel ist jedoch eine noch genauere Modellierung der Kaltmiete unter Berücksichtigung der weiteren Daten.
+
+Um die weiteren Variablen miteinzubeziehen, verwenden wir die lineare Regression, die mit der `lm()`-Funktion auf die Daten angewendet werden kann. Wir starten zunächst erneut mit der `Kaltmiete` und der `Wohnflaeche`.
+
+
+
+```{r}
+km.lm1 <- lm(Kaltmiete ~ Wohnflaeche, data = mieten)
+summary(km.lm1)
+```
+
+
+
+Mit einem Bestimmtheitsmaß von $R^2 ~ 0.56$, haben wir mit der linearen Regression allein unter Verwendung der `Wonflaeche` noch kein gutes Modell erzeugt.
+
+Da zu Beginn der explorativen Datenanalyse festgestellt wurde, dass die Kaltmieten zwischen den beiden Orten Frankfurt am Main und Leipzig unter sonst gleichen Bedingungen unterscheidet, soll diese zuerst in die Modellierung miteinbezogen werden.
+
+
+
+```{r}
+km.lm2 <- lm(Kaltmiete ~ Wohnflaeche + Ort, data = mieten)
+summary(km.lm2)
+```
+
+
+
+Durch das Miteinbeziehen des Ortes steigert sich das Bestimmtheitsmaß bereits auf $R^2 ~ 0.78$. An der Zusammenfassung der Ergebnisse lässt sich außerdem ablesen, dass in Leipzig die Kaltmiete im Schnitt 655,13€ billiger als in Leipzig ist. Das Modell lässt sich nun wie folgt darstellen:
+
+$$ Kaltmiete = 261.03 + Wohnflaeche \cdot 16.57 + \beta1 \cdot -655.13 $$
+
+
+
+# Rest
+
+Modellieren Sie in diesem Abschnitt die Miete und interpretieren Sie Ihr Ergebnis. 
+
+Bei Einzelarbeiten sollte der reine Text (ohne Code, Abbildungen etc.) einen Umfang von ca. 0,5--1 Seiten haben, bei Gruppenarbeiten einen von ca. 1--2 Seiten.
+
+Modell schätzen:
+
+
+
+```{r}
+# Modell_Mieten <- lm(Kaltmiete ~ 1, data = mieten)
+# summary(Modell_Mieten)
+```
+
+
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+# Zusammenfassung
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+
+***
+
+# Quellen und Hilfsmittel
+
+Führen Sie hier die verwendeten Hilfsmittel sowie die verwendete Literatur auf.
+
+
