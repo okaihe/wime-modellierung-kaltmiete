@@ -115,6 +115,7 @@ mean(~ ppqm, data = miete_lpz)
 ```
 Der Mittelwert für die Kaltmiete liegt in Frankfurt bei 1.652,82€ und damit mehr als 600€ über dem Kaltmietendurchschnitt von Leipzig (1.011,64€). Der mittlere Quadratmeterpreis liegt in Frankfurt bei 19,83€, in Leipzig liegt er bei 11,74€.
 
+## Wohnfläche
 Zuerst soll auf den Zusammenhang von `Kaltmiete` und `Wohnflaeche` geschaut werden, bei zwei metrisch verhältnisskalierten Variablen bietet sich dafür ein Scatterplot an.
 
 ```{r}
@@ -147,6 +148,8 @@ gf_boxplot(ppqm ~ Ort, data = mieten)
 ```
 Die grundsätzliche Aussage der Kaltmiete gilt hier auch für den Quadratmeterpreis: In Frankfurt ist der Median des Quadratmeterpreises deutlich höher als in Leipzig. Die Whisker sind für beide Städte nun kürzer, und die Anzahl der Ausreißer hat sich verändert: In Frankfurt gibt es nun 3 Ausreißer, in Leipzig nur noch einen.
 
+
+## Heizung
 Es sollen nun auch die weiteren Variablen untersucht werden, angefangen mit der Variablen `Heizung`. Um die verschiedenen Ausprägungen zu vergleichen und ihre absolute Häufigkeit darzustellen, eignet sich ein Säulendiagramm:
 ```{r}
 gf_bar( ~ Heizung, data = mieten, fill = ~ Ort, position = position_dodge()) + 
@@ -167,6 +170,8 @@ gf_point(ppqm ~ Heizung, data = mieten, color = ~ Ort, position = position_dodge
 ```
 Durch die Betrachtung des Quadratmeterpreises wird erneut erkennbar, dass dieser in Frankfurt höher ist als in Leipzig. Jedoch sind für die häufigsten Heizungstypen (Fußbodenheizung in Frankfurt, Zentralheizung in Leipzig) keine signifikanten Unterschiede im Quadratmeterpreis erkennbar. Innerhalb der Heizungstypen gibt es stets eine Streuung, sodass in Frankfurt Wohnungen mit Fußbodenheizung einen Quadratmeterpreis zwischen ca. 17€ und 27€ aufweisen, in Leipzig variiert der Quadratmeterpreis bei Wohnungen mit Zentralheizung zwischen ca. 5€ und 15€.
 
+
+## Baujahr
 Bei der Variablen `Baujahr` handelt es sich hier um eine diskrete Variable. Aufgrund der Vielzahl an verschiedenen Jahren im Datensatz eignet sich jedoch die Verwendung des tatsächlichen Baujahres nicht, da die Darstellungen sonst sehr unübersichtlich werden. Stattdessen soll eine Klassifizierung in "alt - mittel - neu" vorgenommen werden, um die Baujahre zusammenzufassen.
 
 ```{r}
@@ -219,7 +224,7 @@ gf_point(Kaltmiete ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(Wohnflaeche ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(ppqm ~ Zimmer, data = mieten, color = ~ Ort)
 ```
-Das erste Streudiagram zeigt: Bei mehr Zimmern ist die Kaltmiete höher. Da die Vermutung naheliegt, dass oft mehr Zimmer mehr Wohnfläche bedeutet, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat eine Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine Wohnung mit 2 Zimmern. Bei einzelnen Wohnungen sind Ausreißer zu erkennen, was auf sehr große oder eher kleine Räume schließen lässt. Bei Wohnungen mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings liegen hier auch kaum Angebote vor. Um nun auch noch den Mieptreis zu betrachten, wurde im dritten Streudiagramm der Quadratmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern größtenteils nicht wesentlich höher. Lediglich in Frankfurt können ein paar Ausreißer erkannt werden.
+Das erste Streudiagram zeigt: Bei mehr Zimmern ist die Kaltmiete höher. Da die Vermutung naheliegt, dass oft mehr Zimmer mehr Wohnfläche bedeutet, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat eine Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine Wohnung mit 2 Zimmern. Bei einzelnen Wohnungen sind Ausreißer zu erkennen, was auf sehr große oder eher kleine Räume schließen lässt. Bei Wohnungen mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings liegen hier auch nur wenige Angebote vor. Um nun auch noch den Mieptreis zu betrachten, wurde im dritten Streudiagramm der Quadratmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern größtenteils nicht wesentlich höher. Lediglich in Frankfurt können ein paar Ausreißer erkannt werden.
 
 
 ## Etage
