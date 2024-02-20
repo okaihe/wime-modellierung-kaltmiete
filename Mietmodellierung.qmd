@@ -185,7 +185,7 @@ gf_point(Kaltmiete ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(Wohnflaeche ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(ppqm ~ Zimmer, data = mieten, color = ~ Ort)
 ```
-Das erste Streudiagram zeigt, bei mehr Zimmern ist die Kaltmietehöher.Da die Vermutung naheliegt, dass oft mehr Zimmer mehr Wohnfläche bedeuten kann, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat ein Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine mit 2 Zimmern. Wobei bei einzelnen Wohnungen ausreißer zu erkenn sind, was auf sehr große oder eher kleine Räume schließen lässt. Bei Wohnung mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings leiegen hier auch keim Angebote vor. Um die nun auch noch den Mieptreis zu bertachten, wurde im dritten Streudiagramm Quadraatmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern größtenteils nicht wesentlich höher. Lediglich in Frankfurt können ein paar Ausreißer erkannt werden.
+Das erste Streudiagram zeigt, bei mehr Zimmern ist die Kaltmietehöher.Da die Vermutung naheliegt, dass oft mehr Zimmer mehr Wohnfläche bedeuten kann, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat ein Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine mit 2 Zimmern. Wobei bei einzelnen Wohnungen ausreißer zu erkenn sind, was auf sehr große oder eher kleine Räume schließen lässt. Bei Wohnung mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings liegen hier auch wenige Angebote vor. Um die nun auch noch den Mieptreis zu bertachten, wurde im dritten Streudiagramm Quadraatmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern größtenteils nicht wesentlich höher. Lediglich in Frankfurt können ein paar Ausreißer erkannt werden.
 
 
 ## Etage
@@ -323,7 +323,8 @@ Betrachten wir Abschließend die Konfidenzintervalle, so lässt sich sagen, dass
 
 # Zusammenfassung
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+TBD - Henrik
 
 
 ***
