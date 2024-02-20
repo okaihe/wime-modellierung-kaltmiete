@@ -92,21 +92,28 @@ head(mieten)
 
 
 # Explorative Datenanalyse
-Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit `str(mieten)` die Struktur des Datensatzes angezeigt werden. Zudem wird mit dem Befehl `subset` der Datensatz nach Stadt unterteilt, falls im weiteren Verlauf der Analyse eine stadtspezifische Aussage getroffen werden soll.
+Zu Beginn der explorativen Datenanalyse muss geprüft werden, ob die in der Datenquelle enthaltenen Daten auf eine bestimmte Art und Weise vorverarbeitet oder angepasst werden müssen. Hierzu kann zunächt mit `str(mieten)` die Struktur des Datensatzes angezeigt werden. 
 
 ```{r}
 str(mieten)
-miete_ffm <- subset(mieten, Ort == "Frankfurt")
-miete_lpz <- subset(mieten, Ort == "Leipzig")
 ```
 
-Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie `Heizung` oder `Zimmer`, als auch metrische verhältnisskalierte Variablen wie `Kaltmiete` oder `Wohnflaeche` auftreten. Zunächst werden keine Variablen angepasst bzw. Werte ersetzt, da für die späteren Diagramme die kategorial nominalen Variablen als Achsenbeschriftung gut verwendet werden können.
-Um nicht nur den Gesamtpreis der Kaltmiete zu betrachten, wird der Quadratmeterpreis mit in den Datensatz aufgenommen:
+Es kann festgestellt werden, dass im Datensatz sowohl kategoriale nominale Variablen wie `Heizung` oder `Zimmer`, als auch metrische verhältnisskalierte Variablen wie `Kaltmiete` oder `Wohnflaeche` auftreten. Um nicht nur den Gesamtpreis der Kaltmiete zu betrachten, wird der Quadratmeterpreis mit in den Datensatz aufgenommen. Zudem wird mit dem Befehl `subset` der Datensatz nach Stadt unterteilt, falls im weiteren Verlauf der Analyse eine stadtspezifische Aussage getroffen werden soll.
 
 ```{r}
 mieten <- mieten |>
   mutate(ppqm = Kaltmiete / Wohnflaeche)
+miete_ffm <- subset(mieten, Ort == "Frankfurt")
+miete_lpz <- subset(mieten, Ort == "Leipzig")
 ```
+Mithilfe der Funktion `mean` kann der Mittelwerte der Kaltmieten und Quadratmeterpreise in beiden Städten betrachtet werden.
+```{r}
+mean(~ Kaltmiete, data = miete_ffm)
+mean(~ Kaltmiete, data = miete_lpz)
+mean(~ ppqm, data = miete_ffm)
+mean(~ ppqm, data = miete_lpz)
+```
+Der Mittelwert für die Kaltmiete liegt in Frankfurt bei 1.652,82€ und damit mehr als 600€ über dem Kaltmietendurchschnitt von Leipzig (1.011,64€). Der mittlere Quadratmeterpreis liegt in Frankfurt bei 19,83€, in Leipzig liegt er bei 11,74€.
 
 Zuerst soll auf den Zusammenhang von `Kaltmiete` und `Wohnflaeche` geschaut werden, bei zwei metrisch verhältnisskalierten Variablen bietet sich dafür ein Scatterplot an.
 
@@ -121,26 +128,44 @@ Nun muss dieses Diagramm jedoch um die Information des Ortes erweitert werden, u
 gf_point(Kaltmiete ~ Wohnflaeche, data = mieten, color = ~ Ort)
 ```
 
-Hier lässt sich nun erkennen, dass die erfassten Mieten im Datensatz in Frankfurt tendenziell höher sind, als in Leipzig. Bei vergleichbarer Wohnfläche liegen die gefärbten Punkte für Frankfurt stets über den Punkten von Leipzig. Um den Eindruck der Mietunterschiede zu festigen, kann ein Boxplot verwendet werden.
+Hier lässt sich nun erkennen, dass die erfassten Mieten im Datensatz in Frankfurt tendenziell höher sind, als in Leipzig. Bei vergleichbarer Wohnfläche liegen die gefärbten Punkte für Frankfurt stets über den Punkten von Leipzig. 
+Betrachtet man statt der gesamten Kaltmiete den Quadratmeterpreis `ppqm`, entsteht folgende Darstellung:
+```{r}
+gf_point(ppqm ~ Wohnflaeche, data = mieten, color = ~ Ort)
+```
+Auch der Quadratmeterpreis liegt in Frankfurt tendenziell über dem Quadratmeterpreis von Leipzig, nur wenige Beobachtungen weisen bei vergleichbarer Wohnfläche in beiden Städten einen ähnlichen Quadratmeterpreis auf.
+
+Um den Eindruck der Mietunterschiede zu festigen, kann ein Boxplot verwendet werden.
 
 ```{r}
 gf_boxplot(Kaltmiete ~ Ort, data = mieten)
 ```
 
-Das Boxplot zeigt, dass der Median für die Kaltmiete in Frankfurt deutlich über dem Median von Leipzig liegt. Zudem ist der 1,5-fache Interquartilsabstand bei Frankfurt größer als bei Leipzig, und die Whisker sind bei Frankfurt ebenfalls länger. Für Leipzig gibt es jedoch mehr Ausreißer, nämlich 4, verglichen mit den 2 Ausreißern von Frankfurt.
-Mithilfe der Funktion `mean` kann der Mittelwerte der Mieten in beiden Städten betrachtet werden.
+Das Boxplot zeigt, dass der Median für die `Kaltmiete` in Frankfurt deutlich über dem Median von Leipzig liegt. Zudem ist der Interquartilsabstand bei Frankfurt größer als bei Leipzig, und die Whisker sind bei Frankfurt ebenfalls länger. Für Leipzig gibt es jedoch mehr Ausreißer, nämlich 4, verglichen mit den 2 Ausreißern von Frankfurt. Für den Quadratmeterpreis ergibt sich folgende Darstellung:
 ```{r}
-mean(~ Kaltmiete, data = miete_ffm)
-mean(~ Kaltmiete, data = miete_lpz)
+gf_boxplot(ppqm ~ Ort, data = mieten)
 ```
-Der Mittelwert für die Kaltmiete liegt in Frankfurt bei 1.652,82€ und damit mehr als 600€ über dem Kaltmietendurchschnitt von Leipzig (1.011,64€).
+Die grundsätzliche Aussage der Kaltmiete gilt hier auch für den Quadratmeterpreis: In Frankfurt ist der Median des Quadratmeterpreises deutlich höher als in Leipzig. Die Whisker sind für beide Städte nun kürzer, und die Anzahl der Ausreißer hat sich verändert: In Frankfurt gibt es nun 3 Ausreißer, in Leipzig nur noch einen.
 
 Es sollen nun auch die weiteren Variablen untersucht werden, angefangen mit der Variablen `Heizung`. Um die verschiedenen Ausprägungen zu vergleichen und ihre absolute Häufigkeit darzustellen, eignet sich ein Säulendiagramm:
 ```{r}
-gf_bar( ~ Heizung, data = mieten, fill = ~ Ort, position = position_dodge()) + theme(axis.text.x = element_text(angle = 90))
+gf_bar( ~ Heizung, data = mieten, fill = ~ Ort, position = position_dodge()) + 
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
 Das Säulendiagramm zeigt, dass die Fußbodenheizung in Frankfurt am weitesten verbreitet ist, gefolgt von der Zentralheizung und der Fernwärme. In Leipzig ist die Zentralheizung am weitesten verbreitet, gefolgt von der Fußbodenheizung und der Fernwärme. In einigen Beobachtungen und häufiger in Leipzig als in Frankfurt, wurde der Heizungstyp nicht angegeben.
+
+Mit einem Punktdiagramm kann der Zusammenhang zwischen der Heizungsart und der Kaltmiete betrachtet werden.
+```{r}
+gf_point(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort, position = position_dodge()) + 
+  theme(axis.text.x = element_text(angle = 90))
+```
+Die teuersten Wohnungen in Frankfurt haben eine Zentral- oder Fußbodenheizung, die günstigste Wohnung in Frankfurt wird mit Fernwärme geheizt. In Leipzig ist wie bereits festgestellt die Verteilung der Heizungstypen eine andere: Hier Hat die teuerste Wohnung ebenfalls eine Zentralheizung und die günstigste Wohnung wird mit Fernwärme beheizt, jedoch sind auch bei der Zentralheizung viele der günstigen Wohnungen zu finden. 
+```{r}
+gf_point(ppqm ~ Heizung, data = mieten, color = ~ Ort, position = position_dodge()) + 
+  theme(axis.text.x = element_text(angle = 90))
+```
+Durch die Betrachtung des Quadratmeterpreises wird erneut erkennbar, dass dieser in Frankfurt höher ist als in Leipzig. Jedoch sind für die häufigsten Heizungstypen (Fußbodenheizung in Frankfurt, Zentralheizung in Leipzig) keine signifikanten Unterschiede im Quadratmeterpreis erkennbar. Innerhalb der Heizungstypen gibt es stets eine Streuung, sodass in Frankfurt Wohnungen mit Fußbodenheizung einen Quadratmeterpreis zwischen ca. 17€ und 27€ aufweisen, in Leipzig variiert der Quadratmeterpreis bei Wohnungen mit Zentralheizung zwischen ca. 5€ und 15€.
 
 Bei der Variablen `Baujahr` handelt es sich hier um eine diskrete Variable. Aufgrund der Vielzahl an verschiedenen Jahren im Datensatz eignet sich jedoch die Verwendung des tatsächlichen Baujahres nicht, da die Darstellungen sonst sehr unübersichtlich werden. Stattdessen soll eine Klassifizierung in "alt - mittel - neu" vorgenommen werden, um die Baujahre zusammenzufassen.
 
@@ -158,6 +183,15 @@ gf_bar( ~ Baujahrgruppe, data = mieten, fill = ~ Ort, position = position_dodge(
 
 Im Säulendiagramm ist erkennbar, dass die meisten Beobachtungen in Frankfurt in die Kategorie `neu` (Baujahr > 2000) fallen, gefolgt von `alt` (Baujahr < 1970) und `mittel`. In Leipzig dominieren die Beobachtungen mit `alt`, dann kommen `neu`e Baujahre. Es treten in beiden Städten nur wenige Beobachtungen mit Baujahren zwischen 1970 und 2000 auf.
 
+```{r}
+gf_boxplot(Kaltmiete ~ Baujahrgruppe, data = mieten, color = ~ Ort)
+```
+Das Boxplot zeigt Unterschiede im Median der Kaltmieten je Ort, abhängig vom Alter der Wohnung. Bei alten Wohnungen ist der Median beider Städte noch am nächsten beieinander (ca. 1.100€ in Frankfurt und ca. 1.000€ in Leipzig), wobei in Frankfurt das obere und untere Quartil weiter auseinander liegen und in Leipzig ein Ausreißer existiert. Für Wohnungen mittleren Alters ist die Box für Leipzig sehr klein, da hier nur wenige Beobachtungen vorliegen und diese auch kaum Streuung aufweisen. In Frankfurt hingegen liegt mehr Streuung vor, die Box ist deutlich größer und der Median liegt mit ca. 1.250€ deutlich über dem von Leipzig (ca. 500€). Zudem gibt es einen Ausreißer in Frankfurt und in Leipzig. Bei Neubauten ist die größte Differenz im Median erkennbar: Frankfurt liegt bei ca. 1.750€, Leipzig bei ca. 800€. Zudem sind die Whisker für Frankfurt deutlich länger, Leipzig weist einen Ausreißer auf.
+```{r}
+gf_boxplot(ppqm ~ Baujahrgruppe, data = mieten, color = ~ Ort)
+```
+Verwendet man auch hier den Quadratmeterpreis statt der Kaltmiete, ergibt sich ein tendenziell ähnliches Bild: Unabhängig vom Baujahr liegt der Median in Frankfurt über dem von Leipzig. Jedoch gibt es nun keine Ausreißer mehr in Leipzig, in Frankfurt je einen für Altbauten und Wohnungen mittleren Alters und zwei Ausreißer für Neubauten. Bei Altbauten liegen das obere und untere Quartil in Frankfurt weiter auseinander als in Leipzig, ebenso bei Neubauten. Für mittelalte Wohnungen ist der Interquartilsabstand in Leipzig höher. In Frankfurt ist der Median bei Neubauten am höchsten und in mittelalten Wohnungen am niedrigsten. In Leipzig verhält es sich ebenso.
+
 ## Parkplatz
 ```{r}
 gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten, color = ~ Ort)
@@ -166,7 +200,7 @@ favstats(ppqm ~ Parkplatz, data = mieten)
 tally(Ort ~ Parkplatz, data = mieten)
 ```
 In beiden Boxplots ist zu sehen, dass sowohl der Gesamtpreis der Kaltmiete als auch der Quadrameterpreis höher ist, wenn eine Wohnung einen Parkplatz bietet.   
-Der Unterschied grundsätzliche Unterschied bei den Mietpreisen zwischen den Städten ist hier sowohl bei Wohnnungsangeboten mit als auch ohne Parkplatz zu erkennen. So zeigt das Boxplot einen eine wesentlich höhere Preisspanne in Frankfurt bei Woihnungen ohne Parkplatz besonders aber bei Wonhnungen mit Parkplatz. Im vorliegende Datensatz ist die Verteilung der Wonhungen mit oder ohne Parkplatz in Frankfurt relativ gleich verteilt (26:24) in Leipzig  sind es jedoch etwas mehr Wohungen ohne Parkplatz (17:31).  
+Der grundsätzliche Unterschied bei den Mietpreisen zwischen den Städten ist hier sowohl bei Wohnnungsangeboten mit als auch ohne Parkplatz zu erkennen. So zeigt das Boxplot eine wesentlich höhere Preisspanne in Frankfurt bei Wohnungen ohne Parkplatz, besonders aber bei Wohnungen mit Parkplatz. Im vorliegenden Datensatz ist die Verteilung der Wonhungen mit oder ohne Parkplatz in Frankfurt relativ gleich verteilt (26:24), in Leipzig  sind es jedoch etwas mehr Wohungen ohne Parkplatz (17:31).  
 
 
 ## Balkon
@@ -177,7 +211,7 @@ favstats(ppqm ~ Balkon, data = mieten)
 tally(Ort ~ Balkon, data = mieten)
 ```
 
-Das erste Boxplot zeigt Wohnung mit Balkon sind meist teurer. Da der Balkon auch zu 25% in die gesamte Wohnflaeche eingerechnet ist, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Hier ist auch ein Zusammenhang zwischen Balkon "Ja" und einen höheren Kaltmiete zu erkennen. 
+Das erste Boxplot zeigt, dass Wohnungen mit Balkon meist etwas teurer sind. Da der Balkon auch zu 25% in die gesamte Wohnfläche eingerechnet ist, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Hier ist auch ein Zusammenhang zwischen Balkon "Ja" und einer höheren Kaltmiete zu erkennen. 
 
 ## Zimmer
 ```{r}
@@ -185,14 +219,14 @@ gf_point(Kaltmiete ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(Wohnflaeche ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(ppqm ~ Zimmer, data = mieten, color = ~ Ort)
 ```
-Das erste Streudiagram zeigt, bei mehr Zimmern ist die Kaltmietehöher.Da die Vermutung naheliegt, dass oft mehr Zimmer mehr Wohnfläche bedeuten kann, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat ein Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine mit 2 Zimmern. Wobei bei einzelnen Wohnungen ausreißer zu erkenn sind, was auf sehr große oder eher kleine Räume schließen lässt. Bei Wohnung mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings liegen hier auch wenige Angebote vor. Um die nun auch noch den Mieptreis zu bertachten, wurde im dritten Streudiagramm Quadraatmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern größtenteils nicht wesentlich höher. Lediglich in Frankfurt können ein paar Ausreißer erkannt werden.
+Das erste Streudiagram zeigt: Bei mehr Zimmern ist die Kaltmiete höher. Da die Vermutung naheliegt, dass oft mehr Zimmer mehr Wohnfläche bedeutet, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat eine Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine Wohnung mit 2 Zimmern. Bei einzelnen Wohnungen sind Ausreißer zu erkennen, was auf sehr große oder eher kleine Räume schließen lässt. Bei Wohnungen mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings liegen hier auch kaum Angebote vor. Um nun auch noch den Mieptreis zu betrachten, wurde im dritten Streudiagramm der Quadratmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern größtenteils nicht wesentlich höher. Lediglich in Frankfurt können ein paar Ausreißer erkannt werden.
 
 
 ## Etage
 ```{r}
-gf_point(Kaltmiete ~ Etage, data = mieten, color = ~ Ort)
+# gf_point(Kaltmiete ~ Etage, data = mieten, color = ~ Ort)
 ```
-Das Streudiagramm zeigt lediglich, dass die meisten Wohnungen im 0. bis 6. Geschoss sind. Der Mietpreis streut in der Spanne aber bei jeder Etage sehr ähnlich. Wie sich die Etage der Angebotene Wohnung auf den Mietpreis auswirkt, ist daher schlecht interpretierbar. Daher wurde sich entschieden, das Diagram auszublenden und die Etage nicht weiter als Variable in die Modellierung aufzunehmen.
+Das Streudiagramm zeigt, dass die meisten Wohnungen im 0. bis 6. Geschoss sind. Der Mietpreis streut in der Spanne aber bei jeder Etage sehr ähnlich. Wie sich die Etage der Angebotene Wohnung auf den Mietpreis auswirkt, ist daher schlecht interpretierbar. Daher wurde sich entschieden, das Diagram auszublenden und die Etage nicht weiter als Variable in die Modellierung aufzunehmen.
 
 
 # Modellierung
@@ -211,7 +245,7 @@ price_per_squaremeter <- sum_kaltmiete / sum_wohnflaeche
 
 Damit ergibt sich als ersten einfaches Modell für die `Kaltmiete` unter Verwendung der `Wohnfläche` als unabhängige Variable folgende Gleichung:
 
-$$ Kaltmiete = Wohnfläche \cdot `r round(price_per_squaremeter, digits = 2)` € $$
+$$ Kaltmiete = Wohnflaeche \cdot `r round(price_per_squaremeter, digits = 2)` € $$
 Wir betrachten das Modell, indem die berechnete Gerade in das Streudiagramm der explorativen Datenanalyse eingezeichnet wird:
 
 ```{r}
@@ -261,7 +295,7 @@ km.lm2.coef <- coef(km.lm2)
 print(km.lm2.coef)
 ```
 
-it dem Miteinbeziehen der Indekatorvariable $x2$ beziehungsweise der kategorialen Variable des Ortes erhalten wir ein Bestimmtheitsmaß von $R^2 = 0.77$. Die Variation des Mietpreises kann also zu $78$% durch den Mietpreis und dem Ort erklärt werden. An der Zusammenfassung der Ergebnisse lässt sich außerdem ablesen, dass in Leipzig die Kaltmiete im Mittelwert 655,13€ billiger als in Leipzig ist. Das Modell lässt sich nun wie folgt darstellen:
+it dem Miteinbeziehen der Indikatorvariable $x2$ beziehungsweise der kategorialen Variable des Ortes erhalten wir ein Bestimmtheitsmaß von $R^2 = 0.77$. Die Variation des Mietpreises kann also zu $78$% durch den Mietpreis und dem Ort erklärt werden. An der Zusammenfassung der Ergebnisse lässt sich außerdem ablesen, dass in Leipzig die Kaltmiete im Mittelwert 655,13€ billiger als in Leipzig ist. Das Modell lässt sich nun wie folgt darstellen:
 
 $$ 
 \hat{y}_i = 
@@ -283,9 +317,11 @@ Grafisch erhalten wir dadurch die zwei Geraden, abhängig des Ortes:
 
 ```{r}
 frankfurt.x = c(0, 200)
-frankfurt.y = c(km.lm2.coef[1] + km.lm2.coef[2] * 0 + km.lm2.coef[3] * 0, km.lm2.coef[1] + km.lm2.coef[2] * 200 + km.lm2.coef[3] * 0 )
+frankfurt.y = c(km.lm2.coef[1] + km.lm2.coef[2] * 0 + km.lm2.coef[3] * 0, 
+                km.lm2.coef[1] + km.lm2.coef[2] * 200 + km.lm2.coef[3] * 0 )
 leipzig.x = c(0, 200)
-leipzig.y = c(km.lm2.coef[1] + km.lm2.coef[2] * 0 + km.lm2.coef[3] * 1, km.lm2.coef[1] + km.lm2.coef[2] * 200 + km.lm2.coef[3] * 1 )
+leipzig.y = c(km.lm2.coef[1] + km.lm2.coef[2] * 0 + km.lm2.coef[3] * 1, 
+              km.lm2.coef[1] + km.lm2.coef[2] * 200 + km.lm2.coef[3] * 1 )
 pps_y = c(0, price_per_squaremeter * 200)
 gf_line(frankfurt.y ~ frankfurt.x, color = "orange") |> 
   gf_line(leipzig.y ~ leipzig.x, color = "lightblue") |>
@@ -299,13 +335,14 @@ Sowohl grafisch als auch am Bestimmtheitsmaß ist bereits sichtbar, dass die Mod
 Zuletzt werden die weiteren Variablen in die lineare Regression miteinbezogen und das daraus entstehende Modell betrachtet und interpretiert. Wir verwenden nun zusätzlich die Informationen bezüglich des `Parkplatzes`, der Anzahl der Zimmer, des `Baujahres`, das Vorhandensein eines Balkons und der `Etage`.
 
 ```{r}
-km.lm3 <- lm(Kaltmiete ~ Wohnflaeche + Ort + Parkplatz + Balkon + Baujahr + Etage + Zimmer + Heizung, data = mieten)
+km.lm3 <- lm(Kaltmiete ~ Wohnflaeche + Ort + Parkplatz + Balkon + Baujahr + 
+               Etage + Zimmer + Heizung, data = mieten)
 summary(km.lm3)
 ```
 
 Zu sehen ist, dass wir unter dem Miteinbeziehen aller Informationen, die zur Verfügung stehen, dennoch nur ein Bestimmtheitsmaß von $R = 0.85$ erreichen. Das bedeutet, dass trotz aller Daten, die Variation der Mietpreise nur zu ca. $85\%$ erklärt werden kann, was entsprechend $15\%$ unerklärt lässt.
 
-Wie bereits in der vorherigen linearen Regression zu sehen war, hat sowohl der Ort als auch die Wohnfläche einen starken Einfluss auf den Wohnpreis. Beide Attribute sind unter einem Signifikanzniveau von $\alpha = 0.001$ statistisch signifkant. Dass der Ort und die Größe der Wohnung einen erheblichen Einfluss auf den Mietpreis nehmen, ist nicht weiter überraschend. Unter dem gleichen Signifikanzniveau statistisch signifikant ist ebenso die Etage, in der die Wohnung liegt. Wir sehen hier im Mittel einen Anstieg des Mietpreises um ca. $23,00€$ pro Etage. Begründen lässt sich dies eventuell durch die bessere Aussicht in den oberen Etagen und die Wahrscheinlichkeiten auf Wohnungstypen wie Penthäuser gesteigert ist.
+Wie bereits in der vorherigen linearen Regression zu sehen war, hat sowohl der Ort als auch die Wohnfläche einen starken Einfluss auf den Wohnpreis. Beide Attribute sind unter einem Signifikanzniveau von $\alpha = 0.001$ statistisch signifkant. Dass der Ort und die Größe der Wohnung einen erheblichen Einfluss auf den Mietpreis nehmen, ist nicht weiter überraschend. Unter dem gleichen Signifikanzniveau statistisch signifikant ist ebenso die Etage, in der die Wohnung liegt. Wir sehen hier im Mittel einen Anstieg des Mietpreises um ca. $23,00€$ pro Etage. Begründen lässt sich dies eventuell durch die bessere Aussicht in den oberen Etagen und dass die Wahrscheinlichkeiten auf Wohnungstypen wie Penthäuser höher ist.
 
 Unter einem Signifikanzniveau von $\alpha = 0.05$ statistisch relevant ist sowohl das Vorhandensein eines Parkplatzes als auch das Baujahr. Ist kein Parkplatz vorhanden, so ist der Mietpreis im Mittel ca. $150,00€$ billiger. Da Parkplätze insbesondere in Großstädten, aufgrund der wenigen Parkmöglichkeiten, eine wichtige Rolle spielen ist verständlich. Mit dem Baujahr steigt der Mietpreis im Mittel um ca. $2,00€$. Neuere Immobilien kommen in der Regel mit effizienteren Bauweisen, geringen Energieverbräuchen und modernerem Aussehen und benötigen zumeist geringe Wartungsarbeiten. Daher überrascht es nicht weiter, dass das Baujahr einen Einfluss auf den Mietpreis nimmt.
 
@@ -323,8 +360,7 @@ Betrachten wir Abschließend die Konfidenzintervalle, so lässt sich sagen, dass
 
 # Zusammenfassung
 
-
-TBD - Henrik
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 
 ***
