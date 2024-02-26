@@ -24,6 +24,7 @@ library(mosaic)
 library(here)
 library(readxl)
 library(dplyr)
+options(warn=-1)
 ```
 
 
@@ -145,14 +146,16 @@ Das Säulendiagramm zeigt, dass die Fußbodenheizung in Frankfurt am weitesten v
 Mit einem Punktdiagramm kann der Zusammenhang zwischen der Heizungsart und der Kaltmiete betrachtet werden.
 
 ```{r}
-gf_point(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort, position = position_dodge()) + 
+gf_point(Kaltmiete ~ Heizung, data = mieten, color = ~ Ort,
+         position = position_dodge()) + 
   theme(axis.text.x = element_text(angle = 90))
 ```
 
 Die teuersten Wohnungen in Frankfurt haben eine Zentral- oder Fußbodenheizung, die günstigste Wohnung in Frankfurt wird mit Fernwärme geheizt. In Leipzig ist wie bereits festgestellt die Verteilung der Heizungstypen eine andere: Hier hat die teuerste Wohnung ebenfalls eine Zentralheizung und die günstigste Wohnung wird mit Fernwärme beheizt, jedoch sind auch bei der Zentralheizung viele der günstigen Wohnungen zu finden. 
 
 ```{r}
-gf_point(ppqm ~ Heizung, data = mieten, color = ~ Ort, position = position_dodge()) + 
+gf_point(ppqm ~ Heizung, data = mieten, color = ~ Ort,
+         position = position_dodge()) + 
   theme(axis.text.x = element_text(angle = 90))
 ```
 
