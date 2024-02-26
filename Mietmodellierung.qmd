@@ -31,9 +31,9 @@ library(dplyr)
 
 In dieser Fallstudie sollen die Kaltmieten der beiden Städte Frankfurt am Main und Leipzig miteinander verglichen und modelliert werden. Ziel ist es, die verschiedenen möglichen Einflussfaktoren auf die Kaltmiete in den jeweiligen Städten zu bestimmen und zu analysieren und anschließend eine Modellierung des Preises der Kaltmiete zu erstellen.
 
-Zu Beginn wird auf die Datenerhebung eingegangen. Hier wird erklärt, woher die verarbeiteten Daten stammen und unter welchen Bedingungen die Daten erhoben wurden. Mit der explorativen Datenanalyse sollen dann die erhobenen Daten beschrieben und veranschaulicht werden. Hierbei wird sowohl die Vorverarbeitung der Daten beschrieben als auch mithilfe von Grafiken und dazugehörigen Interpretationen eine Datenanalyse erstellt. Dabei soll unter anderem herausgefunden werden, welche erhobenen Variablen am stärksten auf die Kaltmiete einer Stadt einwirken und wie hoch die eventuellen Unterschiede der Mietpreise der beiden Städten sind.
-Den zweiten zentralen Teil der Arbeit stellt die Modellierung dar. Hier soll die Kaltmiete modelliert, also durch ein selbsterstelltes statistisches Modell dargestellt werden. Das Modell wird anschließend interpretiert.
-Zum Abschluss werden die Ergebnisse in der Zusammenfassung aufgearbeitet und präsentiert.
+Zu Beginn wird auf die Datenerhebung eingegangen. Hier wird erläutert, woher die verarbeiteten Daten stammen und unter welchen Bedingungen die Daten erhoben wurden. Mit der explorativen Datenanalyse sollen dann die erhobenen Daten beschrieben und veranschaulicht werden. Dabei wird sowohl die Vorverarbeitung der Daten beschrieben als auch eine Datenanalyse anhand von Grafiken und entsprechenden Interpretationen durchgeführt. Ziel ist unter anderem herauszufinden, welche der erhobenen Variablen den größten Einfluss auf die Kaltmiete einer Stadt haben und wie groß  eventuelle Unterschiede zwischen den Mietpreise der beiden Städten sind.
+Der zweite zentrale Teil der Arbeit ist die Modellierung. Hier wird die Kaltmiete modelliert, das heißt durch ein selbst erstelltes statistisches Modell abgebildet.  Anschließend wird das Modell interpretiert.
+Abschließend werden die Ergebnisse in der Zusammenfassung aufgearbeitet und präsentiert.
 
 
 # Datenerhebung
@@ -190,6 +190,7 @@ gf_boxplot(ppqm ~ Baujahrgruppe, data = mieten, color = ~ Ort)
 Verwendet man auch hier den Quadratmeterpreis statt der Kaltmiete, ergibt sich ein tendenziell ähnliches Bild: Unabhängig vom Baujahr liegt der Median in Frankfurt über dem von Leipzig. Jedoch gibt es nun keine Ausreißer mehr in Leipzig, in Frankfurt je einen für Altbauten und Wohnungen mittleren Alters und zwei Ausreißer für Neubauten. Bei Altbauten liegen das obere und untere Quartil in Frankfurt weiter auseinander als in Leipzig, ebenso bei Neubauten. Für mittelalte Wohnungen ist der Interquartilsabstand in Leipzig höher. In Frankfurt ist der Median bei Neubauten am höchsten und in mittelalten Wohnungen am niedrigsten. In Leipzig verhält es sich ebenso.
 
 ## Parkplatz
+Zur Analyse des Einflusses der Variable `Parkplatz` eignen sich Boxplot Diagramme. Um sowohl den Einfluss auf die Gesamtkaltmiete als auch auf den Quadratmeterpreis zu betrachten, wurden hier entsprechend zwei entpsrechende Boxplots ausgegeben.
 
 ```{r}
 gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten, color = ~ Ort)
@@ -198,11 +199,11 @@ favstats(ppqm ~ Parkplatz, data = mieten)
 tally(Ort ~ Parkplatz, data = mieten)
 ```
 
-In beiden Boxplots ist zu sehen, dass sowohl der Gesamtpreis der Kaltmiete als auch der Quadratmeterpreis in den Wohnungen höher ist, die einen Parkplatz beinhalten.   
-Der grundsätzliche Unterschied bei den Mietpreisen zwischen den Städten ist hier sowohl bei Wohnungsangeboten mit als auch ohne Parkplatz zu erkennen. So zeigt der Boxplot eine wesentlich höhere Preisspanne in Frankfurt bei Wohnungen ohne Parkplatz, besonders aber bei Wohnungen mit Parkplatz. Im vorliegenden Datensatz ist die Verteilung der Wohnungen mit und ohne Parkplatz in Frankfurt relativ gleich verteilt (26:24). In Leipzig sind es mehr Wohungen ohne Parkplatz (17:31).
+In beiden Boxplots ist zu erkennen, dass sowohl der Gesamtpreis der Kaltmiete als auch der Quadratmeterpreis bei Wohnungen mit Parkpplatz höher ist.   
+Der grundsätzliche Mietpreisunterschied zwischen den Städten zeigt sich hier sowohl bei Wohnungsangeboten mit als auch ohne Parkplatz. So zeigt der Boxplot eine deutlich höhere Preisspanne in Frankfurt für Wohnungen ohne Parkplatz, insbesondere aber für Wohnungen mit Parkplatz. Im vorliegenden Datensatz ist die Verteilung der Wohnungen mit und ohne Parkplatz in Frankfurt relativ gleich verteilt (26:24). In Leipzig gibt es mehr Wohungen ohne Parkplatz (17:31).
 
 ## Balkon
-
+Um den Einfluss der Variable `Balkon` zu untersuchen, wurde ebenfalls ein Boxplot Diagramm genutzt:
 ```{r}
 gf_boxplot(Kaltmiete ~ Balkon, data = mieten, color = ~ Ort)
 gf_boxplot(ppqm ~ Balkon, data = mieten, color = ~ Ort)
@@ -210,26 +211,26 @@ favstats(ppqm ~ Balkon, data = mieten)
 tally(Ort ~ Balkon, data = mieten)
 ```
 
-Der erste Boxplot zeigt, dass Wohnungen mit Balkon meist etwas teurer sind. Da der Balkon auch zu 25% in die gesamte Wohnfläche eingerechnet ist, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Hier ist auch ein Zusammenhang zwischen Balkon "Ja" und einer höheren Kaltmiete zu erkennen.
+Der erste Boxplot zeigt, dass Wohnungen mit Balkon generell etwas teurer sind. Da der Balkon auch mit 25% in die Gesamtwohnfläche eingeht, wird im zweiten Boxplot auch der Quadratmeterpreis betrachtet. Auch hier zeigt sich ein Zusammenhang zwischen Balkon "Ja" und höherer Kaltmiete, was darauf schließen lässt, dass ein Balkon im Durchschnitt auch den Quadratmeterpreis der Kaltmiete erhöht.
 
 ## Zimmer
-
+Zur Untersuchung der Variable `Zimmer` wurden Streudiagramme genutzt.  
 ```{r}
 gf_point(Kaltmiete ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(Wohnflaeche ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(ppqm ~ Zimmer, data = mieten, color = ~ Ort)
 ```
 
-  Das erste Streudiagramm zeigt: Bei mehr Zimmern ist die Kaltmiete höher. Da die Vermutung naheliegt, dass oft mehr Zimmer mehr Wohnfläche bedeutet, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat eine Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine Wohnung mit 2 Zimmern. Bei einzelnen Wohnungen sind Ausreißer zu erkennen, was auf sehr große oder eher kleine Räume schließen lässt. Bei Wohnungen mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings liegen hier auch nur wenige Angebote vor. Um nun auch noch den Mietptreis zu betrachten, wurde im dritten Streudiagramm der Quadratmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern größtenteils nicht wesentlich höher. Lediglich in Frankfurt können ein paar Ausreißer erkannt werden.
+Das erste Streudiagramm zeigt: Je mehr Zimmern, desto höher die Kaltmiete. Da die Vermutung nahe liegt, dass mehr Zimmer oft mehr Wohnfläche bedeuten, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat eine Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine Wohnung mit 2 Zimmern. Bei einzelnen Wohnungen sind Ausreißer zu erkennen, die auf sehr große oder eher kleine Räume schließen lassen. Bei Wohnungen mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings gibt es hier auch nur wenige Angebote. Um nun auch den Mietptreis zu betrachten, wurde im dritten Streudiagramm der Quadratmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern überwiegend nicht wesentlich höher. Lediglich in Frankfurt sind einige Ausreißer zu erkennen.
 
 
 ## Etage
 
 ```{r}
-# gf_point(Kaltmiete ~ Etage, data = mieten, color = ~ Ort)
+ gf_point(ppqm ~ Etage, data = mieten, color = ~ Ort)
 ```
 
-Das Streudiagramm zeigt, dass die meisten Wohnungen im 0. bis 6. Geschoss sind. Der Mietpreis streut in der Spanne aber bei jeder Etage sehr ähnlich. Wie sich die Etage der angebotene Wohnung auf den Mietpreis auswirkt, ist daher schlecht interpretierbar. Daher wurde sich entschieden, das Diagramm auszublenden und die Etage nicht weiter als Variable in die Modellierung aufzunehmen.
+Das Streudiagramm zeigt, dass die meisten Wohnungen im 0. bis 6. Geschoss sind. Die Streuung der Mietpreise ist jedoch für diese Geschosse sehr ähnlich. Es ist daher schwer zu interpretieren, wie sich die Etage der angebotenen Wohnung auf den Mietpreis auswirkt. Es ist lediglich ein kleine steigende Tendenz für Wohungen in Frankfurt zu erkennen.  
 
 
 # Modellierung
@@ -246,7 +247,7 @@ sum_kaltmiete <- sum(~ Kaltmiete, data = mieten)
 price_per_squaremeter <- sum_kaltmiete / sum_wohnflaeche
 ```
 
-Damit ergibt sich als ersten Modell für die `Kaltmiete` unter Verwendung der `Wohnfläche` als unabhängige Variable folgende Gleichung:
+Damit ergibt sich als erstes     Modell für die `Kaltmiete` unter Verwendung der `Wohnfläche` als unabhängige Variable folgende Gleichung:
 
 $$ Kaltmiete = Wohnflaeche \cdot `r round(price_per_squaremeter, digits = 2)` € $$
 Wir betrachten das Modell, indem die berechnete Gerade in das Streudiagramm der explorativen Datenanalyse eingezeichnet wird:
@@ -363,7 +364,12 @@ Betrachten wir Abschließend die Konfidenzintervalle, so lässt sich sagen, dass
 
 # Zusammenfassung
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Das Ziel dieser Fallstudie war die Kaltmieten von Frankfurt am Main und Leipzig zu vergleichen und zu modellieren. Dazu wurden innerhalb der explorativen Datenanalyse Einflussfaktoren ermittelt und diese anschließend in statistische Modelle mitaufgenommen.  Die Modelle wurden anschließend diskutiert und bewertet.
+Die explorative Datenanalyse zeigt, dass besonders die Wohnfläche und der Ort einen signifikanten Einfluss auf die Kaltmiete haben. Daher wurde bei der weiteren Analyse immer der Quadratmeterpreis sowie die Unterscheidung der beiden Städte mit aufgenommen. Die Variablen `Baujahr`, `Parkplatz` und `Balkon`zeigen ebenso einen direkten Einfluss auf die Kaltmiete sowie den Quadratmeterpreis. Die Variable `Heizung`lässt keine direkte Interpretation über den Einfluss auf die Kaltmiete zu. Dafür ist hier die Streuung zu groß. Ebenso kann bei der Variable `Etage` kein direkter Einfluss erkannt werden.
+
+Da in der explorativen Analyse schon ein starker Zusammenhang zwischen Kaltmiete und Wohnfläche erkannt werden kann, wird zunächst die Kaltmiete anhand der Wohnfläche multipliziert mit dem durchschnittlichen Quadratmeterpreis modelliert. Anschließen wird durch eine lineare Regression die Kaltmiete mit der abhängigen Variable `Wohnfläche ` modelliert. Um die Genauigkeit des Modells zu steigern, wird das Modell um den `Ort` ergänzt, was das Bestimmtheitsmaß von R² = 0.56 auf R² = 0.77 erhöht. Im finalen Modell werden alle Variablen in eine lineare Regression mit aufgenommen. Dieses Modell erreicht ein Bestimmtheitsniveau von R² = 0.85, was es zu dem genauesten Modell dieser Arbeit macht. Die statistisch signifikantesten Variablen sind `Wohnfläche`, `Ort` und `Etage` (Siginifikanzniveau $\alpha = 0.001$).  Statistisch relevant sind außerdem die Variablen `Parkplatz` und `Baujahr` (Siginifikanzniveau $\alpha = 0.05$).  Die Anzahl der Zimmer und das Vorhandensein des Balkons haben nach diesem Modell kaum Einfluss auf die Kaltmiete. Der Vergleich des Modells mit den Annahmen aus der explorativen Analyse zeigt unterschiedliche Schwerpunkte
+Das erarbeitete Modell kann die Kaltmiete im vorliegenden Datensatz zu 85% erklären. Um das Modell zu verbessern, könnten weitere Variablen hinzugezogen werden und der Datensatz um weitere Beobachtung ergänzt werden. 
+
 
 
 ***
