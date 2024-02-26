@@ -190,7 +190,7 @@ gf_boxplot(ppqm ~ Baujahrgruppe, data = mieten, color = ~ Ort)
 Verwendet man auch hier den Quadratmeterpreis statt der Kaltmiete, ergibt sich ein tendenziell ähnliches Bild: Unabhängig vom Baujahr liegt der Median in Frankfurt über dem von Leipzig. Jedoch gibt es nun keine Ausreißer mehr in Leipzig, in Frankfurt je einen für Altbauten und Wohnungen mittleren Alters und zwei Ausreißer für Neubauten. Bei Altbauten liegen das obere und untere Quartil in Frankfurt weiter auseinander als in Leipzig, ebenso bei Neubauten. Für mittelalte Wohnungen ist der Interquartilsabstand in Leipzig höher. In Frankfurt ist der Median bei Neubauten am höchsten und in mittelalten Wohnungen am niedrigsten. In Leipzig verhält es sich ebenso.
 
 ## Parkplatz
-Zur Analyse des Einflusses der Variable `Parkplatz` eignen sich Boxplot Diagramme. Um sowohl den Einfluss auf die Gesamtkaltmiete als auch auf den Quadratmeterpreis zu betrachten, wurden hier entsprechend zwei entpsrechende Boxplots ausgegeben.
+Zur Analyse des Einflusses der Variable `Parkplatz` eignen sich Boxplot Diagramme. Um sowohl den Einfluss auf die Gesamtkaltmiete als auch auf den Quadratmeterpreis zu betrachten, wurden hier entsprechend zwei entsprechende Boxplots ausgegeben.
 
 ```{r}
 gf_boxplot(Kaltmiete ~ Parkplatz, data = mieten, color = ~ Ort)
@@ -199,8 +199,8 @@ favstats(ppqm ~ Parkplatz, data = mieten)
 tally(Ort ~ Parkplatz, data = mieten)
 ```
 
-In beiden Boxplots ist zu erkennen, dass sowohl der Gesamtpreis der Kaltmiete als auch der Quadratmeterpreis bei Wohnungen mit Parkpplatz höher ist.   
-Der grundsätzliche Mietpreisunterschied zwischen den Städten zeigt sich hier sowohl bei Wohnungsangeboten mit als auch ohne Parkplatz. So zeigt der Boxplot eine deutlich höhere Preisspanne in Frankfurt für Wohnungen ohne Parkplatz, insbesondere aber für Wohnungen mit Parkplatz. Im vorliegenden Datensatz ist die Verteilung der Wohnungen mit und ohne Parkplatz in Frankfurt relativ gleich verteilt (26:24). In Leipzig gibt es mehr Wohungen ohne Parkplatz (17:31).
+In beiden Boxplots ist zu erkennen, dass sowohl der Gesamtpreis der Kaltmiete als auch der Quadratmeterpreis bei Wohnungen mit Parkplatz höher ist.   
+Der grundsätzliche Mietpreisunterschied zwischen den Städten zeigt sich hier sowohl bei Wohnungsangeboten mit als auch ohne Parkplatz. So zeigt der Boxplot eine deutlich höhere Preisspanne in Frankfurt für Wohnungen ohne Parkplatz, insbesondere aber für Wohnungen mit Parkplatz. Im vorliegenden Datensatz ist die Verteilung der Wohnungen mit und ohne Parkplatz in Frankfurt relativ gleich verteilt (26:24). In Leipzig gibt es mehr Wohnungen ohne Parkplatz (17:31).
 
 ## Balkon
 Um den Einfluss der Variable `Balkon` zu untersuchen, wurde ebenfalls ein Boxplot Diagramm genutzt:
@@ -221,8 +221,7 @@ gf_point(Wohnflaeche ~ Zimmer, data = mieten, color = ~ Ort)
 gf_point(ppqm ~ Zimmer, data = mieten, color = ~ Ort)
 ```
 
-Das erste Streudiagramm zeigt: Je mehr Zimmern, desto höher die Kaltmiete. Da die Vermutung nahe liegt, dass mehr Zimmer oft mehr Wohnfläche bedeuten, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat eine Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine Wohnung mit 2 Zimmern. Bei einzelnen Wohnungen sind Ausreißer zu erkennen, die auf sehr große oder eher kleine Räume schließen lassen. Bei Wohnungen mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings gibt es hier auch nur wenige Angebote. Um nun auch den Mietptreis zu betrachten, wurde im dritten Streudiagramm der Quadratmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern überwiegend nicht wesentlich höher. Lediglich in Frankfurt sind einige Ausreißer zu erkennen.
-
+Das erste Streudiagramm zeigt: Je mehr Zimmern, desto höher die Kaltmiete. Da die Vermutung nahe liegt, dass mehr Zimmer oft mehr Wohnfläche bedeuten, wurde im zweiten Streudiagramm die Wohnfläche unter der Anzahl der Zimmer ausgegeben. Insgesamt ist hier zu erkennen, dass die Variable Zimmer einen Einfluss auf die Wohnfläche hat. So hat eine Wohnung mit 4 Zimmern fast immer mehr Wohnfläche als eine Wohnung mit 2 Zimmern. Bei einzelnen Wohnungen sind Ausreißer zu erkennen, die auf sehr große oder eher kleine Räume schließen lassen. Bei Wohnungen mit 5 Zimmern liegen die Angebote weit verteilt vor (100m²-200m²). Allerdings gibt es hier auch nur wenige Angebote. Um nun auch den Mietpreis zu betrachten, wurde im dritten Streudiagramm der Quadratmeterpreis und die Zimmeranzahl ausgegeben. Der Quadratmeterpreis ist bei mehr Zimmern überwiegend nicht wesentlich höher. Lediglich in Frankfurt sind einige Ausreißer zu erkennen.
 
 ## Etage
 
@@ -230,7 +229,7 @@ Das erste Streudiagramm zeigt: Je mehr Zimmern, desto höher die Kaltmiete. Da d
  gf_point(ppqm ~ Etage, data = mieten, color = ~ Ort)
 ```
 
-Das Streudiagramm zeigt, dass die meisten Wohnungen im 0. bis 6. Geschoss sind. Die Streuung der Mietpreise ist jedoch für diese Geschosse sehr ähnlich. Es ist daher schwer zu interpretieren, wie sich die Etage der angebotenen Wohnung auf den Mietpreis auswirkt. Es ist lediglich ein kleine steigende Tendenz für Wohungen in Frankfurt zu erkennen.  
+Das Streudiagramm zeigt, dass die meisten Wohnungen im 0. bis 6. Geschoss sind. Die Streuung der Mietpreise ist jedoch für diese Geschosse sehr ähnlich. Es ist daher schwer zu interpretieren, wie sich die Etage der angebotenen Wohnung auf den Mietpreis auswirkt. Es ist lediglich ein leicht steigende Tendenz für Wohnungen in Frankfurt zu erkennen.
 
 
 # Modellierung
